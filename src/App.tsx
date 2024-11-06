@@ -45,7 +45,7 @@ export default function App() {
     //light
     const black = styles.getPropertyValue("--black");
     const white = styles.getPropertyValue("--white");
-    const paper = styles.getPropertyValue("--paper");
+    const light = styles.getPropertyValue("--light");
     const mint = styles.getPropertyValue("--mint");
     const scrollColorBlack = styles.getPropertyValue("--scroll-color-black");
 
@@ -57,17 +57,17 @@ export default function App() {
 
     const docEl = document.documentElement;
     if (darkMode) {
-      docEl.style.setProperty("--background", paper);
+      docEl.style.setProperty("--background", light);
       docEl.style.setProperty("--foreground", black);
       docEl.style.setProperty("--scroll-color", scrollColorBlack);
       docEl.style.setProperty("--highlight", mint);
-      docEl.style.setProperty("--header", white);
+      docEl.style.setProperty("--paper", white);
     } else {
       docEl.style.setProperty("--background", darkBlack);
       docEl.style.setProperty("--foreground", darkWhite);
       docEl.style.setProperty("--scroll-color", scrollColorWhite);
       docEl.style.setProperty("--highlight", darkMint);
-      docEl.style.setProperty("--header", black);
+      docEl.style.setProperty("--paper", black);
     }
     setDarkMode((v) => !v);
   };
@@ -82,7 +82,6 @@ export default function App() {
             justify-content: space-between;
             height: 48px;
             padding: 0px 10px;
-            background-color: var(--header);
             ${unselectable}
           `}
         >

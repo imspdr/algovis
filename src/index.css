@@ -1,7 +1,7 @@
 :root {
   --white: #fffffe;
   --black: #000000;
-  --paper: #f6f8fa;
+  --light: #f6f8fa;
   --scroll-color-black: rgba(0, 0, 0, 0.7);
   --mint: #94d6c5;
 
@@ -12,9 +12,9 @@
   --scroll-color-white: rgba(255, 255, 255, 0.3);
   
   --scroll-color: var(--scroll-color-black);
-  --background: var(--paper);
+  --background: var(--light);
   --foreground: var(--black);
-  --header: var(--white);
+  --paper: var(--white);
   --highlight: var(--mint);
 }
 
