@@ -12,7 +12,7 @@ export default function Template(props: {
   onStop: () => void;
   onRefresh: () => void;
 }) {
-  const [dividerPosition, setDividerPosition] = useState(40);
+  const [dividerPosition, setDividerPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
 
   const startDragging = () => setIsDragging(true);

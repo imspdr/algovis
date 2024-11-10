@@ -42,6 +42,10 @@ module.exports = (env) => {
           use: ["style-loader", "css-loader"],
         },
         {
+          test: /\.md$/,
+          use: 'raw-loader',
+        },
+        {
           test: /\.svg$/i,
           issuer: /\.[jt]sx?$/,
           use: [

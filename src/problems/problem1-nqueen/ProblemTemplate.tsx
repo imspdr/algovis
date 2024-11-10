@@ -3,6 +3,7 @@ import Template from "@src/common/template/Template";
 import MobileTemplate from "@src/common/template/MobileTemplate";
 import ChessBoard from "./components/ChessBoard";
 import Selector from "./components/Selector";
+import ProblemDesc from "./components/ProblemDesc";
 import { observer } from "mobx-react";
 import { useProblemStore } from "./store/ProblemStoreProvider";
 
@@ -31,7 +32,7 @@ function ProblemTemplate() {
     <>
       {nowWidth > 900 ? (
         <Template
-          problem={<div>문제컴포넌트</div>}
+          problem={<ProblemDesc />}
           selector={<Selector />}
           viewer={<ChessBoard />}
           onStart={onStart}
@@ -40,7 +41,7 @@ function ProblemTemplate() {
         />
       ) : (
         <MobileTemplate
-          problem={<div>문제컴포넌트</div>}
+          problem={<ProblemDesc />}
           selector={<Selector />}
           viewer={<ChessBoard />}
           onStart={onStart}
