@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
-import { Paper, List, ListItemButton, ListItemText } from "@mui/material";
+import { Paper, List, ListItemButton, Divider, Typography } from "@mui/material";
 import { codingTests } from "@src/App";
 
 export default function HomePage() {
@@ -8,32 +8,57 @@ export default function HomePage() {
   return (
     <div
       css={css`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         padding: 20px;
       `}
     >
       <Paper
         elevation={0}
         css={css`
+          width: 480px;
           border-radius: 10px;
+          border: 1px solid;
         `}
       >
-        <List>
-          {codingTests.map((cote) => (
+        <Divider />
+        {codingTests.map((cote) => (
+          <>
             <ListItemButton
               onClick={() => {
                 navigate("/" + cote.url);
               }}
             >
-              <ListItemText
+              <div
                 css={css`
-                  width: 200px;
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
                 `}
-                primary={cote.name}
-              />
-              <ListItemText primary={cote.desc} />
+              >
+                <Typography
+                  css={css`
+                    width: 120px;
+                  `}
+                  variant="body2"
+                >
+                  {cote.name}
+                </Typography>
+                -
+                <Typography
+                  css={css`
+                    margin-left: 10px;
+                  `}
+                  variant="body2"
+                >
+                  {cote.desc}
+                </Typography>
+              </div>
             </ListItemButton>
-          ))}
-        </List>
+            <Divider />
+          </>
+        ))}
       </Paper>
     </div>
   );

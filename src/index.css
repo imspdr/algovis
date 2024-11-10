@@ -4,11 +4,12 @@
   --light: #f6f8fa;
   --scroll-color-black: rgba(0, 0, 0, 0.7);
   --mint: #94d6c5;
-
+  --pink: #d694c6;
 
   --dark-white: #f8f8f2;
   --dark-black: #272822;
   --dark-mint: #3a987f;
+  --dark-pink: #c15da9;
   --scroll-color-white: rgba(255, 255, 255, 0.3);
   
   --scroll-color: var(--scroll-color-black);
@@ -16,6 +17,7 @@
   --foreground: var(--black);
   --paper: var(--white);
   --highlight: var(--mint);
+  --warning: var(--pink);
 }
 
 html {

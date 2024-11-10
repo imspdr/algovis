@@ -4,3 +4,7 @@ export const unselectable = `-webkit-touch-callout: none;
 -moz-user-select: none;
 -ms-user-select: none;
 user-select: none;`;
+
+export const sleep = async (ms: number) => {
+  return new Promise((r) => setTimeout(r, ms));
+};
