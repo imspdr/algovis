@@ -14,8 +14,8 @@ function ChessBlock(props: {
   return (
     <div
       css={css`
-        width: ${props.size}px;
-        height: ${props.size}px;
+        width: ${Math.floor(100 / props.size)}%;
+        height: 100%;
         background-color: ${props.color === 0
           ? props.isCovered
             ? "#009999"
@@ -33,11 +33,7 @@ function ChessBlock(props: {
       onClick={props.onClick}
     >
       {props.hasQueen ? (
-        <QueenIcon
-          width={`${props.size}px`}
-          height={`${props.size}px`}
-          fill={props.color === 0 ? "#ffffff" : "#000000"}
-        />
+        <QueenIcon width={"80%"} height={"80%"} fill={props.color === 0 ? "#ffffff" : "#000000"} />
       ) : (
         ""
       )}
@@ -47,44 +43,40 @@ function ChessBlock(props: {
 
 function ChessBoard() {
   const chessStore = useProblemStore();
-  const givenSize = 500;
-  const boardSize = Math.round(givenSize / chessStore.nQueen) * chessStore.nQueen;
   return (
-    <div>
-      <div
-        css={css`
-          width: ${boardSize}px;
-          height: ${boardSize}px;
-          border: 5px solid;
-        `}
-      >
-        {[...new Array(chessStore.nQueen)].map((_, i) => {
-          return (
-            <div
-              key={`${i}th-row-of-chessboard`}
-              css={css`
-                display: flex;
-                flex-direcion: row;
-              `}
-            >
-              {[...new Array(chessStore.nQueen)].map((_, j) => {
-                return (
-                  <ChessBlock
-                    key={`${i}${j}th-chessblock`}
-                    color={(i + j) % 2 === 0 ? 0 : 1}
-                    size={Math.round(givenSize / chessStore.nQueen)}
-                    hasQueen={chessStore.included(i, j)}
-                    isCovered={chessStore.isCovered(i, j)}
-                    onClick={() => {
-                      chessStore.addQueenOnPos(i, j);
-                    }}
-                  />
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
+    <div
+      css={css`
+        width: 100%;
+        height: 100%;
+      `}
+    >
+      {[...new Array(chessStore.nQueen)].map((_, i) => {
+        return (
+          <div
+            key={`${i}th-row-of-chessboard`}
+            css={css`
+              display: flex;
+              flex-direcion: row;
+              height: calc(${Math.floor(100 / chessStore.nQueen)}%);
+            `}
+          >
+            {[...new Array(chessStore.nQueen)].map((_, j) => {
+              return (
+                <ChessBlock
+                  key={`${i}${j}th-chessblock`}
+                  color={(i + j) % 2 === 0 ? 0 : 1}
+                  size={chessStore.nQueen}
+                  hasQueen={chessStore.included(i, j)}
+                  isCovered={chessStore.isCovered(i, j)}
+                  onClick={() => {
+                    chessStore.addQueenOnPos(i, j);
+                  }}
+                />
+              );
+            })}
+          </div>
+        );
+      })}
     </div>
   );
 }

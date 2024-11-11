@@ -25,6 +25,8 @@ export default function ViewerTemplate(props: { viewer: JSX.Element }) {
           css={css`
             margin-top: 10px;
             overflow: auto;
+            width: 100%;
+            height: calc(100% - 55px);
           `}
         >
           {props.viewer}
