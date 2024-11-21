@@ -1,7 +1,8 @@
 import { css } from "@emotion/react";
 import { observer } from "mobx-react";
 import { useProblemStore } from "../store/ProblemStoreProvider";
-import PersonIcon from "@mui/icons-material/Person";
+import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
+import { Typography } from "@mui/material";
 
 function Cell(props: { i: number; j: number; C: number; color: string; person: boolean }) {
   const { i, j, C, color, person } = props;
@@ -9,7 +10,7 @@ function Cell(props: { i: number; j: number; C: number; color: string; person: b
     <div
       key={`${i}th-row-${j}th-col`}
       css={css`
-        width: ${Math.floor(100 / C)}%;
+        width: ${(100 / C).toFixed(2)}%;
         height: 100%;
         background-color: ${color};
         display: flex;
@@ -18,14 +19,14 @@ function Cell(props: { i: number; j: number; C: number; color: string; person: b
         justify-content: center;
       `}
     >
-      {person && <PersonIcon />}
+      {person && (C < 20 ? <AccessibilityNewIcon sx={{ fontSize: "inherit" }} /> : "-")}
     </div>
   );
 }
 function Forest() {
   const problemStore = useProblemStore();
   const getColor = (i: number, j: number) => {
-    if (problemStore.mapState[i]![j] === 2) {
+    if (problemStore.exitState[i]![j]) {
       return "#009999";
     } else if (
       problemStore.nowGolem &&
@@ -33,13 +34,13 @@ function Forest() {
       problemStore.nowGolem.dy == i
     ) {
       return "#009999";
-    } else if (problemStore.mapState[i]![j] === 1) {
-      return "#22cccc";
+    } else if (problemStore.mapState[i]![j]! > 0) {
+      return `rgb(20, ${255 - ((problemStore.mapState[i]![j]! * 33) % 100)}, 0)`;
     } else if (
       problemStore.nowGolem &&
       Math.abs(i - problemStore.nowGolem.y) + Math.abs(j - problemStore.nowGolem.x) <= 1
     ) {
-      return "#22cccc";
+      return "var(--highlight)";
     } else {
       return "var(--paper)";
     }
@@ -51,10 +52,12 @@ function Forest() {
         height: 100%;
       `}
     >
+      <Typography variant="h6">{`${problemStore.n}번째 골렘 처리중`}</Typography>
+      <Typography variant="h6">{` 현재 스코어 : ${problemStore.nowScore}`}</Typography>
       <div
         css={css`
           width: 100%;
-          height: 95%;
+          height: calc(100% - ${problemStore.R * 2 + 80}px);
         `}
       >
         {[...new Array(problemStore.R + 3)].map((_, i) => {
@@ -65,7 +68,7 @@ function Forest() {
                 display: flex;
                 flex-direcion: row;
                 border: ${i < 3 ? "0px" : "1px solid"};
-                height: calc(${Math.floor(100 / (problemStore.R + 3))}%);
+                height: ${(100 / (problemStore.R + 3)).toFixed(4)}%;
               `}
             >
               {[...new Array(problemStore.C)].map((_, j) => {
@@ -80,7 +83,7 @@ function Forest() {
                         problemStore.nowMan &&
                         problemStore.nowMan.x == j &&
                         problemStore.nowMan.y == i
-                      )
+                      ) || problemStore.visitState[i]![j]!
                     }
                   />
                 );

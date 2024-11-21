@@ -42,7 +42,7 @@ module.exports = (env) => {
           use: ["style-loader", "css-loader"],
         },
         {
-          test: /\.md$/,
+          test: /\.(md|txt)$/,
           use: 'raw-loader',
         },
         {

@@ -4,6 +4,7 @@ import MobileTemplate from "@src/common/template/MobileTemplate";
 import { observer } from "mobx-react";
 import { useProblemStore } from "./store/ProblemStoreProvider";
 import ProblemDesc from "./components/ProblemDesc";
+import Controller from "./components/Controller";
 import Forest from "./components/Forest";
 
 function ProblemTemplate() {
@@ -25,8 +26,7 @@ function ProblemTemplate() {
     problemStore.running = false;
   };
   const onRefresh = () => {
-    problemStore.resetMap();
-    problemStore.nowScore = 0;
+    problemStore.refresh();
   };
 
   return (
@@ -34,7 +34,7 @@ function ProblemTemplate() {
       {nowWidth > 900 ? (
         <Template
           problem={<ProblemDesc />}
-          selector={<div>문제컴포넌트</div>}
+          selector={<Controller />}
           viewer={<Forest />}
           onStart={onStart}
           onStop={onStop}
@@ -43,7 +43,7 @@ function ProblemTemplate() {
       ) : (
         <MobileTemplate
           problem={<ProblemDesc />}
-          selector={<div>문제컴포넌트</div>}
+          selector={<Controller />}
           viewer={<Forest />}
           onStart={onStart}
           onStop={onStop}
