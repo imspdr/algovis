@@ -7,6 +7,7 @@ import { unselectable } from "@src/util";
 import ThemeToggle from "./common/ThemeToggle";
 import HomePage from "./common/HomePage";
 import Problem1Page from "@src/problems/problem1-nqueen/ProblemMain";
+import Problem2Page from "@src/problems/problem2-magicforest/ProblemMain";
 
 type CodingTest = {
   name: string;
@@ -113,7 +114,7 @@ export default function App() {
             <Routes>
               <Route path="/home" element={<HomePage />} />
               <Route path="/nqueen" element={<Problem1Page />} />
-              <Route path="/magicforest" element={<div>magicforest</div>} />
+              <Route path="/magicforest" element={<Problem2Page />} />
 
               <Route path="*" element={<Navigate to="/home" replace />} />
             </Routes>

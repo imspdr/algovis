@@ -12,7 +12,7 @@ export default function MobileTemplate(props: {
   onStop: () => void;
   onRefresh: () => void;
 }) {
-  const [tabState, setTabState] = useState(false);
+  const [tabState, setTabState] = useState(true);
   return (
     <>
       <div
