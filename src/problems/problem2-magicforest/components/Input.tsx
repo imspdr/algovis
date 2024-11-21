@@ -78,6 +78,7 @@ function Input() {
             css={css`
               color: var(--highlight);
             `}
+            disabled={problemStore.running}
             onChange={(e, v) => {
               problemStore.setInput(v as number, problemStore.C, problemStore.rows);
             }}
@@ -95,6 +96,7 @@ function Input() {
             css={css`
               color: var(--highlight);
             `}
+            disabled={problemStore.running}
             onChange={(e, v) => {
               problemStore.setInput(problemStore.R, v as number, problemStore.rows);
             }}

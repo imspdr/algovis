@@ -1,79 +1,81 @@
 import { css } from "@emotion/react";
 import { observer } from "mobx-react";
 import { useProblemStore } from "../store/ProblemStoreProvider";
-import { unselectable } from "@src/util";
+import { Typography, Slider } from "@mui/material";
 
 function Selector() {
-  const chessStore = useProblemStore();
+  const problemStore = useProblemStore();
+  const inputBlock = css`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  `;
+  const nMarks = [
+    {
+      value: 4,
+      label: "4",
+    },
+    {
+      value: 30,
+      label: "30",
+    },
+  ];
+  const delayMarks = [
+    {
+      value: 1,
+      label: "1",
+    },
+    {
+      value: 1000,
+      label: "1000",
+    },
+  ];
   return (
-    <div>
-      <div
-        css={css`
-          display: flex;
-          flex-direction: column;
-          width: 100%;
-          align-items: center;
-        `}
-      >
-        <div
+    <div
+      css={css`
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 40px);
+        align-items: center;
+        padding: 20px;
+        gap: 20px;
+      `}
+    >
+      <div css={inputBlock}>
+        <Typography variant="h6">{`애니메이션 딜레이 : ${problemStore.delay}`}</Typography>
+        <Slider
+          aria-label="delay"
+          value={problemStore.delay}
+          step={1}
+          min={1}
+          max={1000}
+          marks={delayMarks}
           css={css`
-            width: 10%;
+            color: var(--highlight);
           `}
-        >
-          {`N퀸 : `}
-        </div>
-        <div
+          onChange={(e, v) => {
+            problemStore.setDelay(v as number);
+          }}
+        />
+      </div>
+      <div css={inputBlock}>
+        <Typography variant="h6">{`n : ${problemStore.nQueen}`}</Typography>
+        <Slider
+          aria-label="nqueen"
+          value={problemStore.nQueen}
+          step={1}
+          min={4}
+          max={30}
+          marks={nMarks}
           css={css`
-            display: flex;
-            flex-direction: row;
-            justify-content: space-evenly;
-            width: 20%;
+            color: var(--highlight);
           `}
-        >
-          <div
-            onClick={() => {
-              if (chessStore.nQueen > 4) {
-                chessStore.nQueen = chessStore.nQueen - 1;
-              }
-            }}
-            css={css`
-              width: 30px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              ${unselectable}
-              ${chessStore.solving ? "color : #AAAAAA;" : ""}
-            `}
-          >
-            {"-"}
-          </div>
-          <div
-            css={css`
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            `}
-          >
-            {`${chessStore.nQueen}`}
-          </div>
-          <div
-            onClick={() => {
-              if (chessStore.nQueen < 20) {
-                chessStore.nQueen = chessStore.nQueen + 1;
-              }
-            }}
-            css={css`
-              width: 30px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              ${chessStore.solving ? "color : #AAAAAA;" : ""}
-              ${unselectable}
-            `}
-          >
-            {"+"}
-          </div>
-        </div>
+          disabled={problemStore.solving}
+          onChange={(e, v) => {
+            problemStore.nQueen = v as number;
+          }}
+        />
       </div>
     </div>
   );

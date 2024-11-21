@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { sleep } from "@src/util";
 
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -8,11 +8,18 @@ class ProblemStore {
   private __poses: string;
   private __solving: boolean;
 
+  delay: number;
   constructor() {
     this.__nQueen = 8;
     this.__poses = "";
     this.__solving = false;
+    this.delay = 100;
     makeAutoObservable(this);
+  }
+  setDelay(delay: number) {
+    runInAction(() => {
+      this.delay = delay;
+    });
   }
   get nQueen() {
     return this.__nQueen;
