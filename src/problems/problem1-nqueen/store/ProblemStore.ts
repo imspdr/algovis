@@ -112,7 +112,7 @@ class ProblemStore {
         return false;
       } else if (!this.isCovered(i, j)) {
         // 배치할 수 있는 영역에 대해 배치하고 다음 행으로 넘기기
-        await sleep(10);
+        await sleep(this.delay);
         this.poses = this.poses + pos;
         let ret = await this.solver(i + 1);
         if (ret) return true;

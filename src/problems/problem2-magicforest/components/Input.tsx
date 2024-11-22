@@ -50,7 +50,7 @@ function Input() {
         `}
       >
         <div css={inputBlock}>
-          <Typography variant="h6">{`애니메이션 딜레이 : ${problemStore.delay}`}</Typography>
+          <Typography variant="h6">{`애니메이션 딜레이 : ${problemStore.delay}ms`}</Typography>
           <Slider
             aria-label="delay"
             value={problemStore.delay}
