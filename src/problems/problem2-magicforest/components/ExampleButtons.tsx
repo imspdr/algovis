@@ -7,17 +7,24 @@ import inputContent from "./input.txt";
 function ExampleButtons() {
   const problemStore = useProblemStore();
   const setText = (input: string) => {
-    try {
-      const lines = input.trim().split("\n");
-      if (lines.length > 1) {
+    const twoNumber = /^(\d+)\s+(\d+)/;
+    const lines = input.trim().split("\n");
+    if (lines.length > 1 && lines[0]) {
+      if (twoNumber.test(lines[0])) {
         const [R, C] = lines[0]!.split(" ").map(Number);
-        const rows = lines.slice(1).map((line) => {
-          const [c, d] = line.split(" ").map(Number);
-          return { c: c!, d: d! };
+        if (!R || !C || R < 5 || C < 5) return;
+
+        const rows: { c: number; d: number }[] = [];
+
+        lines.slice(1).forEach((line) => {
+          if (twoNumber.test(line)) {
+            const [c, d] = line.split(" ").slice(0, 2).map(Number);
+            rows.push({ c: c!, d: d! });
+          }
         });
         problemStore.setInput(R!, C!, rows);
       }
-    } catch {}
+    }
   };
   return (
     <div

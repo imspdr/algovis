@@ -4,15 +4,15 @@ import { sleep } from "@src/util";
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 class ProblemStore {
-  private __nQueen: number;
-  private __poses: string;
-  private __solving: boolean;
+  private _nQueen: number;
+  private _poses: string;
+  private _solving: boolean;
 
   delay: number;
   constructor() {
-    this.__nQueen = 8;
-    this.__poses = "";
-    this.__solving = false;
+    this._nQueen = 8;
+    this._poses = "";
+    this._solving = false;
     this.delay = 100;
     makeAutoObservable(this);
   }
@@ -22,25 +22,25 @@ class ProblemStore {
     });
   }
   get nQueen() {
-    return this.__nQueen;
+    return this._nQueen;
   }
   set nQueen(n: number) {
     if (!this.solving) {
-      this.__nQueen = n;
+      this._nQueen = n;
       this.clear();
     }
   }
   get poses() {
-    return this.__poses;
+    return this._poses;
   }
   set poses(poses: string) {
-    this.__poses = poses;
+    this._poses = poses;
   }
   get solving() {
-    return this.__solving;
+    return this._solving;
   }
   set solving(bool: boolean) {
-    this.__solving = bool;
+    this._solving = bool;
   }
 
   clear = () => {

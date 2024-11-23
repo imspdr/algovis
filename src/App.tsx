@@ -8,6 +8,7 @@ import ThemeToggle from "./common/ThemeToggle";
 import HomePage from "./common/HomePage";
 import Problem1Page from "@src/problems/problem1-nqueen/ProblemMain";
 import Problem2Page from "@src/problems/problem2-magicforest/ProblemMain";
+import Problem3Page from "@src/problems/problem3-sort/ProblemMain";
 
 type CodingTest = {
   name: string;
@@ -25,6 +26,11 @@ export const codingTests: CodingTest[] = [
     url: "magicforest",
     name: "마법의 숲 탐색",
     desc: "삼성 SW 역량테스트 2024 상반기 오후 1번 문제",
+  },
+  {
+    url: "sort",
+    name: "정렬 알고리즘",
+    desc: "bubble, quick, merge sort 시각화",
   },
 ];
 
@@ -115,6 +121,7 @@ export default function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/nqueen" element={<Problem1Page />} />
               <Route path="/magicforest" element={<Problem2Page />} />
+              <Route path="/sort" element={<Problem3Page />} />
 
               <Route path="*" element={<Navigate to="/home" replace />} />
             </Routes>
