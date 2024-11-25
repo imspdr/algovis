@@ -46,7 +46,7 @@ body {
 *::-webkit-scrollbar-thumb {
   width: 8px !important;
   height: 8px;
-  border-radius: 2px !important;
+  border-radius: 4px !important;
   margin: 0 !important;
   color: var(--scrollColor) !important;
 }

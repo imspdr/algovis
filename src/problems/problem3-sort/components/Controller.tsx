@@ -10,6 +10,7 @@ function Controller() {
     width: 100%;
     display: flex;
     flex-direction: column;
+    gap: 10px;
     align-items: flex-start;
   `;
   const nMarks = [
@@ -92,7 +93,11 @@ function Controller() {
           }}
         >
           {sortAlgos.map((item) => {
-            return <MenuItem value={item.value}>{item.label}</MenuItem>;
+            return (
+              <MenuItem key={`${item.label}`} value={item.value}>
+                {item.label}
+              </MenuItem>
+            );
           })}
         </Select>
       </div>

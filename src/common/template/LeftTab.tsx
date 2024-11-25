@@ -29,6 +29,7 @@ export default function LeftTab(props: {
         {props.tabs.map((tab, index) => {
           return (
             <div
+              key={`${tab.label}-${index}`}
               css={css`
                 width: ${TABWIDTH}px;
                 height: ${TABHEIGHT}px;

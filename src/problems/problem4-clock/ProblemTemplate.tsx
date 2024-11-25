@@ -5,6 +5,7 @@ import { observer } from "mobx-react";
 import { useProblemStore } from "./store/ProblemStoreProvider";
 import ProblemDesc from "./components/ProblemDesc";
 import Clock from "./components/Clock";
+import Controller from "./components/Controller";
 
 function ProblemTemplate() {
   const [nowWidth, setNowWidth] = useState(window.innerWidth);
@@ -16,18 +17,23 @@ function ProblemTemplate() {
 
   const problemStore = useProblemStore();
 
-  const onStart = () => {
+  const onStart = async () => {
+    await problemStore.start();
     return true;
   };
-  const onStop = () => {};
-  const onRefresh = () => {};
+  const onStop = () => {
+    problemStore.setRunning(false);
+  };
+  const onRefresh = () => {
+    problemStore.refresh();
+  };
 
   return (
     <>
       {nowWidth > 900 ? (
         <Template
           problem={<ProblemDesc />}
-          selector={<div>문제컴포넌트</div>}
+          selector={<Controller />}
           viewer={<Clock />}
           onStart={onStart}
           onStop={onStop}
@@ -36,7 +42,7 @@ function ProblemTemplate() {
       ) : (
         <MobileTemplate
           problem={<ProblemDesc />}
-          selector={<div>문제컴포넌트</div>}
+          selector={<Controller />}
           viewer={<Clock />}
           onStart={onStart}
           onStop={onStop}

@@ -2,12 +2,23 @@ import { css } from "@emotion/react";
 import { observer } from "mobx-react";
 import { useProblemStore } from "../store/ProblemStoreProvider";
 import { Typography } from "@mui/material";
+import { FULL } from "../store/ProblemStore";
 
 function Clock() {
   const problemStore = useProblemStore();
   const WIDTH = 1000;
   const CENTER = 500;
   const RADIUS = 500;
+  const HIGH = 50;
+  const stroke = () => {
+    if (problemStore.smh) {
+      return "var(--warning)";
+    } else if (problemStore.sh || problemStore.sm) {
+      return "var(--highlight)";
+    } else {
+      return "var(--foreground)";
+    }
+  };
   return (
     <div
       css={css`
@@ -23,12 +34,51 @@ function Clock() {
         <circle
           cx={CENTER}
           cy={CENTER}
-          r={RADIUS - 1}
+          r={RADIUS - HIGH}
           fill="var(--background)"
-          stroke="#000"
-          strokeWidth="2"
+          stroke={stroke()}
+          strokeWidth={problemStore.sh || problemStore.sm ? HIGH : 2}
         />
         <circle cx={CENTER} cy={CENTER} r={5} fill="#000" />
+        <line
+          x1={CENTER}
+          y1={CENTER}
+          x2={CENTER + RADIUS * Math.sin((problemStore.s / FULL) * 2 * Math.PI) * 0.9}
+          y2={CENTER - RADIUS * Math.cos((problemStore.s / FULL) * 2 * Math.PI) * 0.9}
+          stroke={stroke()}
+          strokeWidth={problemStore.sh || problemStore.sm ? 0 : 2}
+          strokeLinecap="round"
+        />
+        <line
+          x1={CENTER}
+          y1={CENTER}
+          x2={
+            CENTER +
+            RADIUS * Math.sin((problemStore.m / FULL) * 2 * Math.PI) * (problemStore.sm ? 0.9 : 0.7)
+          }
+          y2={
+            CENTER -
+            RADIUS * Math.cos((problemStore.m / FULL) * 2 * Math.PI) * (problemStore.sm ? 0.9 : 0.7)
+          }
+          stroke={stroke()}
+          strokeWidth={problemStore.sm ? HIGH : 3}
+          strokeLinecap="round"
+        />
+        <line
+          x1={CENTER}
+          y1={CENTER}
+          x2={
+            CENTER +
+            RADIUS * Math.sin((problemStore.h / FULL) * 2 * Math.PI) * (problemStore.sh ? 0.9 : 0.5)
+          }
+          y2={
+            CENTER -
+            RADIUS * Math.cos((problemStore.h / FULL) * 2 * Math.PI) * (problemStore.sh ? 0.9 : 0.5)
+          }
+          stroke={stroke()}
+          strokeWidth={problemStore.sh ? HIGH : 5}
+          strokeLinecap="round"
+        />
       </svg>
     </div>
   );

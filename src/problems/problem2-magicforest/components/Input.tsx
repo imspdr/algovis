@@ -9,6 +9,7 @@ function Input() {
     width: 100%;
     display: flex;
     flex-direction: column;
+    gap: 10px;
     align-items: flex-start;
   `;
   const rcmarks = [

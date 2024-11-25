@@ -22,15 +22,16 @@ export default function HomePage() {
           border: 1px solid;
         `}
       >
-        <Divider />
         {codingTests.map((cote) => (
-          <>
+          <div key={`${cote.name}-row`}>
             <ListItemButton
+              key={`itembutton-${cote.name}`}
               onClick={() => {
                 navigate("/" + cote.url);
               }}
             >
               <div
+                key={`div-${cote.name}`}
                 css={css`
                   display: flex;
                   flex-direction: row;
@@ -38,6 +39,7 @@ export default function HomePage() {
                 `}
               >
                 <Typography
+                  key={`title-${cote.name}`}
                   css={css`
                     width: 120px;
                   `}
@@ -47,6 +49,7 @@ export default function HomePage() {
                 </Typography>
                 -
                 <Typography
+                  key={`desc-${cote.name}`}
                   css={css`
                     margin-left: 10px;
                   `}
@@ -56,8 +59,8 @@ export default function HomePage() {
                 </Typography>
               </div>
             </ListItemButton>
-            <Divider />
-          </>
+            <Divider key={`divider-${cote.name}`} />
+          </div>
         ))}
       </Paper>
     </div>

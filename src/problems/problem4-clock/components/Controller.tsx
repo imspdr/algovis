@@ -2,8 +2,9 @@ import { css } from "@emotion/react";
 import { observer } from "mobx-react";
 import { useProblemStore } from "../store/ProblemStoreProvider";
 import { Typography, Slider } from "@mui/material";
+import TimeInput from "./TimeInput";
 
-function Selector() {
+function Controller() {
   const problemStore = useProblemStore();
   const inputBlock = css`
     width: 100%;
@@ -12,16 +13,6 @@ function Selector() {
     gap: 10px;
     align-items: flex-start;
   `;
-  const nMarks = [
-    {
-      value: 4,
-      label: "4",
-    },
-    {
-      value: 30,
-      label: "30",
-    },
-  ];
   const delayMarks = [
     {
       value: 1,
@@ -61,20 +52,15 @@ function Selector() {
         />
       </div>
       <div css={inputBlock}>
-        <Typography variant="h6">{`n : ${problemStore.nQueen}`}</Typography>
-        <Slider
-          aria-label="nqueen"
-          value={problemStore.nQueen}
-          step={1}
-          min={4}
-          max={30}
-          marks={nMarks}
-          css={css`
-            color: var(--highlight);
-          `}
-          disabled={problemStore.solving}
-          onChange={(e, v) => {
-            problemStore.setNQueen(v as number);
+        <Typography variant="h6">{`시작 시간(HHMMSS)`}</Typography>
+        <TimeInput
+          initTime="000000"
+          onComplete={(v: string) => {
+            problemStore.setStartTime(
+              Number(v.slice(0, 2)),
+              Number(v.slice(2, 4)),
+              Number(v.slice(4, 6))
+            );
           }}
         />
       </div>
@@ -82,4 +68,4 @@ function Selector() {
   );
 }
 
-export default observer(Selector);
+export default observer(Controller);

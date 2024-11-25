@@ -24,6 +24,7 @@ function SortBar() {
           const height = (HEIGHT * bar.value) / 1000;
           return (
             <rect
+              key={`bar-${index}`}
               width={SINGLEWIDTH}
               height={height}
               fill={

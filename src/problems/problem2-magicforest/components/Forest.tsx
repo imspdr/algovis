@@ -74,6 +74,7 @@ function Forest() {
               {[...new Array(problemStore.C)].map((_, j) => {
                 return (
                   <Cell
+                    key={`cell${i}-${j}`}
                     i={i}
                     j={j}
                     C={problemStore.C}
