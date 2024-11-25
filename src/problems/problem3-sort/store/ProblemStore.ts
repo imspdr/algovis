@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { sleep } from "@src/util";
 
 export type bar = {
@@ -18,87 +18,76 @@ const generateArray = (length: number) => {
   }
   return ret;
 };
+
+export const sortAlgos = [
+  {
+    label: "Merge Sort",
+    value: "merge",
+  },
+  {
+    label: "Bubble Sort",
+    value: "bubble",
+  },
+  {
+    label: "Quick Sort",
+    value: "quick",
+  },
+];
+
 class ProblemStore {
-  public sortAlgos: {
-    label: string;
-    value: string;
-  }[];
-
-  private _compareCount: number;
-  private _selectedAlgo: string;
-  private _delay: number;
-  private _arrayLength: number;
-  private _stopFlag: boolean;
-  private _numberArray: bar[];
+  compareCount: number;
+  selectedAlgo: string;
+  delay: number;
+  arrayLength: number;
+  running: boolean;
+  numberArray: bar[];
   constructor() {
-    this._compareCount = 0;
-    this._delay = 10;
-    this._arrayLength = 300;
-    this._numberArray = generateArray(this.arrayLength);
-    this._stopFlag = true;
+    this.compareCount = 0;
+    this.delay = 10;
+    this.arrayLength = 300;
+    this.numberArray = generateArray(this.arrayLength);
+    this.running = false;
 
-    this.sortAlgos = [
-      {
-        label: "Merge Sort",
-        value: "merge",
-      },
-      {
-        label: "Bubble Sort",
-        value: "bubble",
-      },
-      {
-        label: "Quick Sort",
-        value: "quick",
-      },
-    ];
-    this._selectedAlgo = "merge";
+    this.selectedAlgo = "merge";
 
     makeAutoObservable(this);
   }
-  get compareCount() {
-    return this._compareCount;
+  setCompareCount(num: number) {
+    runInAction(() => {
+      this.compareCount = num;
+    });
   }
-  set compareCount(num: number) {
-    this._compareCount = num;
+  setNumberArray = async (numArray: bar[]) => {
+    runInAction(() => {
+      this.numberArray = numArray;
+    });
+    await sleep(this.delay);
+  };
+  setRunning(bool: boolean) {
+    runInAction(() => {
+      this.running = bool;
+    });
   }
-  get numberArray() {
-    return this._numberArray;
+  setSelectedAlgo(algo: string) {
+    runInAction(() => {
+      this.selectedAlgo = algo;
+    });
+    this.reset();
   }
-  set numberArray(numArray: bar[]) {
-    this._numberArray = numArray;
+  setArrayLength(length: number) {
+    runInAction(() => {
+      this.arrayLength = length;
+    });
+    this.reset();
   }
-  get stopFlag() {
-    return this._stopFlag;
-  }
-  set stopFlag(bool: boolean) {
-    this._stopFlag = bool;
-  }
-  get selectedAlgo() {
-    return this._selectedAlgo;
-  }
-  set selectedAlgo(algo: string) {
-    if (this.selectedAlgo !== algo) {
-      this._selectedAlgo = algo;
-      this.reset();
-    }
-  }
-  get arrayLength() {
-    return this._arrayLength;
-  }
-  set arrayLength(length: number) {
-    if (this.arrayLength !== length) {
-      this._arrayLength = length;
-      this.reset();
-    }
-  }
-  get delay() {
-    return this._delay;
-  }
-  set delay(time: number) {
-    this._delay = time;
+  setDelay(time: number) {
+    runInAction(() => {
+      this.delay = time;
+    });
   }
 
   runSort = async () => {
+    this.setRunning(true);
     switch (this.selectedAlgo) {
       case "bubble":
         await this.bubbleSort();
@@ -114,32 +103,36 @@ class ProblemStore {
     }
   };
   reset = () => {
-    this.stopFlag = true;
-    this.compareCount = 0;
-    this.numberArray = generateArray(this.arrayLength);
+    this.setRunning(false);
+    this.setCompareCount(0);
+    this.setNumberArray(generateArray(this.arrayLength));
   };
 
   setState = (indexes: number[], state: string) => {
-    indexes.forEach((i) => {
-      if (this.numberArray[i]) {
-        let val = this.numberArray[i]?.value;
-        if (val)
-          this.numberArray[i] = {
-            value: val,
-            state: state,
-          };
-      }
+    runInAction(() => {
+      indexes.forEach((i) => {
+        if (this.numberArray[i]) {
+          let val = this.numberArray[i]?.value;
+          if (val)
+            this.numberArray[i] = {
+              value: val,
+              state: state,
+            };
+        }
+      });
     });
   };
   setValues = (indexes: number[], values: number[]) => {
-    indexes.forEach((ind, i) => {
-      let ithVal = values[i];
-      if (ithVal) {
-        this.numberArray[ind] = {
-          state: "normal",
-          value: ithVal,
-        };
-      }
+    runInAction(() => {
+      indexes.forEach((ind, i) => {
+        let ithVal = values[i];
+        if (ithVal) {
+          this.numberArray[ind] = {
+            state: "normal",
+            value: ithVal,
+          };
+        }
+      });
     });
   };
 
@@ -156,15 +149,14 @@ class ProblemStore {
     this.setState([i, j], "compare");
     await sleep(this.delay);
     this.setState([i, j], "normal");
-    this.compareCount++;
+    this.setCompareCount(this.compareCount + 1);
   };
 
   // 버블
   bubbleSort = async () => {
-    this.stopFlag = false;
     for (let i = 0; i < this.numberArray.length - 1; i++) {
       for (let j = 0; j < this.numberArray.length - 1 - i; j++) {
-        if (this.stopFlag) {
+        if (!this.running) {
           return;
         }
         await this.compare(j, j + 1);
@@ -175,12 +167,12 @@ class ProblemStore {
         }
       }
     }
-    this.stopFlag = true;
+    this.setRunning(false);
   };
 
   // 머지
   innerMerge = async (start: number, end: number) => {
-    if (this.stopFlag) return;
+    if (!this.running) return;
     const middle = Math.round((start + end) / 2);
     const nowIndexes = [...new Array(end - start + 1)].map((_, i) => start + i);
     let tempArray: number[] = [];
@@ -189,7 +181,7 @@ class ProblemStore {
 
     this.setState(nowIndexes, "compare");
     await sleep(this.delay);
-    this.compareCount += nowIndexes.length;
+    this.setCompareCount(this.compareCount + nowIndexes.length);
     this.setState(nowIndexes, "normal");
 
     for (let i = 0; i < end - start + 1; i++) {
@@ -222,7 +214,7 @@ class ProblemStore {
     this.setValues(nowIndexes, tempArray);
   };
   innerDivide = async (start: number, end: number) => {
-    if (this.stopFlag) return;
+    if (!this.running) return;
     if (start < end) {
       const middle = Math.ceil((end + start) / 2);
       await this.innerDivide(start, middle - 1);
@@ -231,9 +223,8 @@ class ProblemStore {
     }
   };
   mergeSort = async () => {
-    this.stopFlag = false;
     await this.innerDivide(0, this.numberArray.length - 1);
-    this.stopFlag = true;
+    this.setRunning(false);
   };
 
   // 퀵
@@ -244,17 +235,17 @@ class ProblemStore {
         let biggerIndex = right;
         let smallerIndex = left;
         while (biggerIndex > smallerIndex) {
-          if (this.stopFlag) return;
+          if (!this.running) return;
           let biggerVal = this.numberArray[biggerIndex]?.value;
           while (biggerVal && biggerVal > pivot) {
-            if (this.stopFlag) return;
+            if (!this.running) return;
             await this.compare(left, biggerIndex);
             biggerIndex -= 1;
             biggerVal = this.numberArray[biggerIndex]?.value;
           }
           let smallerVal = this.numberArray[smallerIndex]?.value;
           while (smallerIndex < biggerIndex && smallerVal && smallerVal <= pivot) {
-            if (this.stopFlag) return;
+            if (!this.running) return;
             await this.compare(left, smallerIndex);
             smallerIndex += 1;
             smallerVal = this.numberArray[smallerIndex]?.value;
@@ -268,9 +259,9 @@ class ProblemStore {
     }
   };
   quickSort = async () => {
-    this.stopFlag = false;
     await this.innerQuickSort(0, this.numberArray.length - 1);
-    this.stopFlag = true;
+
+    this.setRunning(false);
   };
 }
 

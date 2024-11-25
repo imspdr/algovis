@@ -9,6 +9,7 @@ import HomePage from "./common/HomePage";
 import Problem1Page from "@src/problems/problem1-nqueen/ProblemMain";
 import Problem2Page from "@src/problems/problem2-magicforest/ProblemMain";
 import Problem3Page from "@src/problems/problem3-sort/ProblemMain";
+import Problem4Page from "@src/problems/problem4-clock/ProblemMain";
 
 type CodingTest = {
   name: string;
@@ -31,6 +32,11 @@ export const codingTests: CodingTest[] = [
     url: "sort",
     name: "정렬 알고리즘",
     desc: "bubble, quick, merge sort 시각화",
+  },
+  {
+    url: "clock",
+    name: "아날로그 시계",
+    desc: "[PCCP 기출문제] 3번 / 아날로그 시계",
   },
 ];
 
@@ -122,6 +128,7 @@ export default function App() {
               <Route path="/nqueen" element={<Problem1Page />} />
               <Route path="/magicforest" element={<Problem2Page />} />
               <Route path="/sort" element={<Problem3Page />} />
+              <Route path="/clock" element={<Problem4Page />} />
 
               <Route path="*" element={<Navigate to="/home" replace />} />
             </Routes>

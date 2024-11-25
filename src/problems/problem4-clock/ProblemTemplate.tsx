@@ -4,8 +4,7 @@ import MobileTemplate from "@src/common/template/MobileTemplate";
 import { observer } from "mobx-react";
 import { useProblemStore } from "./store/ProblemStoreProvider";
 import ProblemDesc from "./components/ProblemDesc";
-import SortBar from "./components/SortBar";
-import Controller from "./components/Controller";
+import Clock from "./components/Clock";
 
 function ProblemTemplate() {
   const [nowWidth, setNowWidth] = useState(window.innerWidth);
@@ -17,24 +16,19 @@ function ProblemTemplate() {
 
   const problemStore = useProblemStore();
 
-  const onStart = async () => {
-    await problemStore.runSort();
+  const onStart = () => {
     return true;
   };
-  const onStop = () => {
-    problemStore.running = false;
-  };
-  const onRefresh = () => {
-    problemStore.reset();
-  };
+  const onStop = () => {};
+  const onRefresh = () => {};
 
   return (
     <>
       {nowWidth > 900 ? (
         <Template
           problem={<ProblemDesc />}
-          selector={<Controller />}
-          viewer={<SortBar />}
+          selector={<div>문제컴포넌트</div>}
+          viewer={<Clock />}
           onStart={onStart}
           onStop={onStop}
           onRefresh={onRefresh}
@@ -42,8 +36,8 @@ function ProblemTemplate() {
       ) : (
         <MobileTemplate
           problem={<ProblemDesc />}
-          selector={<Controller />}
-          viewer={<SortBar />}
+          selector={<div>문제컴포넌트</div>}
+          viewer={<Clock />}
           onStart={onStart}
           onStop={onStop}
           onRefresh={onRefresh}

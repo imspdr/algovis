@@ -73,7 +73,7 @@ function Selector() {
           `}
           disabled={problemStore.solving}
           onChange={(e, v) => {
-            problemStore.nQueen = v as number;
+            problemStore.setNQueen(v as number);
           }}
         />
       </div>

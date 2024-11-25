@@ -4,15 +4,15 @@ import { sleep } from "@src/util";
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 class ProblemStore {
-  private _nQueen: number;
-  private _poses: string;
-  private _solving: boolean;
-
+  nQueen: number;
+  poses: string;
+  solving: boolean;
   delay: number;
+
   constructor() {
-    this._nQueen = 8;
-    this._poses = "";
-    this._solving = false;
+    this.nQueen = 8;
+    this.poses = "";
+    this.solving = false;
     this.delay = 100;
     makeAutoObservable(this);
   }
@@ -21,38 +21,34 @@ class ProblemStore {
       this.delay = delay;
     });
   }
-  get nQueen() {
-    return this._nQueen;
+  setNQueen(n: number) {
+    runInAction(() => {
+      this.nQueen = n;
+    });
+    this.clear();
   }
-  set nQueen(n: number) {
-    if (!this.solving) {
-      this._nQueen = n;
-      this.clear();
-    }
-  }
-  get poses() {
-    return this._poses;
-  }
-  set poses(poses: string) {
-    this._poses = poses;
-  }
-  get solving() {
-    return this._solving;
-  }
-  set solving(bool: boolean) {
-    this._solving = bool;
+  setPoses = async (poses: string) => {
+    runInAction(() => {
+      this.poses = poses;
+    });
+    await sleep(this.delay);
+  };
+  setSolving(solving: boolean) {
+    runInAction(() => {
+      this.solving = solving;
+    });
   }
 
   clear = () => {
-    if (!this.solving) this.poses = "";
+    if (!this.solving) this.setPoses("");
   };
 
   addQueenOnPos = (x: number, y: number) => {
     const pos = `${alphabet[x]}${y},`;
     if (this.poses.includes(pos)) {
-      this.poses = this.poses.replace(pos, "");
+      this.setPoses(this.poses.replace(pos, ""));
     } else if (!this.isCovered(x, y)) {
-      this.poses = this.poses + pos;
+      this.setPoses(this.poses + pos);
     }
   };
   included = (x: number, y: number) => {
@@ -81,13 +77,13 @@ class ProblemStore {
 
   onClickSolver = async () => {
     this.clear();
-    this.solving = true;
+    this.setSolving(true);
     await this.solver(0);
-    this.solving = false;
+    this.setSolving(false);
     return true;
   };
   onClickStop = () => {
-    this.solving = false;
+    this.setSolving(false);
   };
   solver = async (i: number) => {
     // i는 행 index j는 열 index로 사용
@@ -102,18 +98,19 @@ class ProblemStore {
         // 마지막 열에서도 해결되지않은 경우
         // 배치한 말 + 직전에 배치한 말 제거하고 return false
         const nPos = this.poses.split(",").length - 1;
-        this.poses = this.poses.split(",").reduce((a, c, i) => {
-          if (i < nPos - 1) {
-            return a + c + ",";
-          } else {
-            return a;
-          }
-        }, "");
+        await this.setPoses(
+          this.poses.split(",").reduce((a, c, i) => {
+            if (i < nPos - 1) {
+              return a + c + ",";
+            } else {
+              return a;
+            }
+          }, "")
+        );
         return false;
       } else if (!this.isCovered(i, j)) {
         // 배치할 수 있는 영역에 대해 배치하고 다음 행으로 넘기기
-        await sleep(this.delay);
-        this.poses = this.poses + pos;
+        await this.setPoses(this.poses + pos);
         let ret = await this.solver(i + 1);
         if (ret) return true;
       }

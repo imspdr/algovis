@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import { observer } from "mobx-react";
 import { useProblemStore } from "../store/ProblemStoreProvider";
 import { Typography, Slider, Select, MenuItem } from "@mui/material";
+import { sortAlgos } from "../store/ProblemStore";
 
 function Controller() {
   const problemStore = useProblemStore();
@@ -55,7 +56,7 @@ function Controller() {
             color: var(--highlight);
           `}
           onChange={(e, v) => {
-            problemStore.delay = v as number;
+            problemStore.setDelay(v as number);
           }}
         />
       </div>
@@ -71,9 +72,9 @@ function Controller() {
           css={css`
             color: var(--highlight);
           `}
-          disabled={!problemStore.stopFlag}
+          disabled={problemStore.running}
           onChange={(e, v) => {
-            problemStore.arrayLength = v as number;
+            problemStore.setArrayLength(v as number);
           }}
         />
       </div>
@@ -87,10 +88,10 @@ function Controller() {
             margin-top: 10px;
           `}
           onChange={(e) => {
-            problemStore.selectedAlgo = e.target.value as string;
+            problemStore.setSelectedAlgo(e.target.value as string);
           }}
         >
-          {problemStore.sortAlgos.map((item) => {
+          {sortAlgos.map((item) => {
             return <MenuItem value={item.value}>{item.label}</MenuItem>;
           })}
         </Select>
