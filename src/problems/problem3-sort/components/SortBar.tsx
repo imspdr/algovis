@@ -18,7 +18,7 @@ function SortBar() {
         width: 100%;
       `}
     >
-      <Typography>{`비교 수 : ${sortStore.compareCount}`}</Typography>
+      <Typography variant="h6">{`비교 수 : ${sortStore.compareCount}`}</Typography>
       <svg viewBox={`0 0 ${SINGLEWIDTH * sortStore.numberArray.length} ${HEIGHT}`}>
         {sortStore.numberArray.map((bar: bar, index: number) => {
           const height = (HEIGHT * bar.value) / 1000;

@@ -29,7 +29,7 @@ function Clock() {
         width: 100%;
       `}
     >
-      <Typography>{`카운트 : ${problemStore.count}`}</Typography>
+      <Typography variant="h6">{`카운트 : ${problemStore.count}`}</Typography>
       <svg viewBox={`0 0 ${WIDTH} ${WIDTH}`}>
         <circle
           cx={CENTER}
@@ -37,7 +37,7 @@ function Clock() {
           r={RADIUS - HIGH}
           fill="var(--background)"
           stroke={stroke()}
-          strokeWidth={problemStore.sh || problemStore.sm ? HIGH : 2}
+          strokeWidth={problemStore.sh || problemStore.sm ? HIGH : 20}
         />
         <circle cx={CENTER} cy={CENTER} r={5} fill="#000" />
         <line
@@ -46,7 +46,7 @@ function Clock() {
           x2={CENTER + RADIUS * Math.sin((problemStore.s / FULL) * 2 * Math.PI) * 0.9}
           y2={CENTER - RADIUS * Math.cos((problemStore.s / FULL) * 2 * Math.PI) * 0.9}
           stroke={stroke()}
-          strokeWidth={problemStore.sh || problemStore.sm ? 0 : 2}
+          strokeWidth={problemStore.sh || problemStore.sm ? 0 : 5}
           strokeLinecap="round"
         />
         <line
@@ -61,7 +61,7 @@ function Clock() {
             RADIUS * Math.cos((problemStore.m / FULL) * 2 * Math.PI) * (problemStore.sm ? 0.9 : 0.7)
           }
           stroke={stroke()}
-          strokeWidth={problemStore.sm ? HIGH : 3}
+          strokeWidth={problemStore.sm ? HIGH : 10}
           strokeLinecap="round"
         />
         <line
@@ -76,7 +76,7 @@ function Clock() {
             RADIUS * Math.cos((problemStore.h / FULL) * 2 * Math.PI) * (problemStore.sh ? 0.9 : 0.5)
           }
           stroke={stroke()}
-          strokeWidth={problemStore.sh ? HIGH : 5}
+          strokeWidth={problemStore.sh ? HIGH : 15}
           strokeLinecap="round"
         />
       </svg>
