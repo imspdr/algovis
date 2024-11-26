@@ -111,7 +111,7 @@ export default function App() {
           `}
         >
           <Typography onClick={() => navigate("/")}>
-            {!!!label ? "IMSPDR" : `IMSPDR / ${label.name}`}
+            {!!!label ? "IMSPDR / cotevis" : `IMSPDR / cotevis / ${label.name}`}
           </Typography>
           <ThemeToggle onClick={toggleTheme} isDark={darkMode} />
         </div>
