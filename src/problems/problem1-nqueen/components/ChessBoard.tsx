@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import { observer } from "mobx-react";
+import { Typography } from "@mui/material";
 import { useProblemStore } from "../store/ProblemStoreProvider";
 import { unselectable } from "@src/util";
 import { ReactComponent as QueenIcon } from "@src/images/queenIcon.svg";
@@ -48,35 +49,50 @@ function ChessBoard() {
       css={css`
         width: 100%;
         height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       `}
     >
-      {[...new Array(chessStore.nQueen)].map((_, i) => {
-        return (
-          <div
-            key={`${i}th-row-of-chessboard`}
-            css={css`
-              display: flex;
-              flex-direcion: row;
-              height: calc(${Math.floor(100 / chessStore.nQueen)}%);
-            `}
-          >
-            {[...new Array(chessStore.nQueen)].map((_, j) => {
-              return (
-                <ChessBlock
-                  key={`${i}${j}th-chessblock`}
-                  color={(i + j) % 2 === 0 ? 0 : 1}
-                  size={chessStore.nQueen}
-                  hasQueen={chessStore.included(i, j)}
-                  isCovered={chessStore.isCovered(i, j)}
-                  onClick={() => {
-                    chessStore.addQueenOnPos(i, j);
-                  }}
-                />
-              );
-            })}
-          </div>
-        );
-      })}
+      <Typography variant="h6">{`배치한 퀸 : ${
+        chessStore.poses.split(",").length - 1
+      }`}</Typography>
+      <div
+        css={css`
+          align-self: center;
+          width: 100%;
+          max-width: 700px;
+          aspect-ratio: 1 / 1;
+        `}
+      >
+        {[...new Array(chessStore.nQueen)].map((_, i) => {
+          return (
+            <div
+              key={`${i}th-row-of-chessboard`}
+              css={css`
+                display: flex;
+                flex-direcion: row;
+                height: calc(${Math.floor(100 / chessStore.nQueen)}%);
+              `}
+            >
+              {[...new Array(chessStore.nQueen)].map((_, j) => {
+                return (
+                  <ChessBlock
+                    key={`${i}${j}th-chessblock`}
+                    color={(i + j) % 2 === 0 ? 0 : 1}
+                    size={chessStore.nQueen}
+                    hasQueen={chessStore.included(i, j)}
+                    isCovered={chessStore.isCovered(i, j)}
+                    onClick={() => {
+                      chessStore.addQueenOnPos(i, j);
+                    }}
+                  />
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
