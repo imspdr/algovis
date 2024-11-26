@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Template from "@src/common/template/Template";
 import MobileTemplate from "@src/common/template/MobileTemplate";
 import ChessBoard from "./components/ChessBoard";
-import Selector from "./components/Selector";
+import Controller from "./components/Controller";
 import ProblemDesc from "./components/ProblemDesc";
 import { observer } from "mobx-react";
 import { useProblemStore } from "./store/ProblemStoreProvider";
@@ -28,22 +28,26 @@ function ProblemTemplate() {
     problemStore.clear();
   };
 
+  const problem = <ProblemDesc />;
+  const controller = <Controller />;
+  const viewer = <ChessBoard />;
+
   return (
     <>
       {nowWidth > 900 ? (
         <Template
-          problem={<ProblemDesc />}
-          selector={<Selector />}
-          viewer={<ChessBoard />}
+          problem={problem}
+          controller={controller}
+          viewer={viewer}
           onStart={onStart}
           onStop={onStop}
           onRefresh={onRefresh}
         />
       ) : (
         <MobileTemplate
-          problem={<ProblemDesc />}
-          selector={<Selector />}
-          viewer={<ChessBoard />}
+          problem={problem}
+          controller={controller}
+          viewer={viewer}
           onStart={onStart}
           onStop={onStop}
           onRefresh={onRefresh}

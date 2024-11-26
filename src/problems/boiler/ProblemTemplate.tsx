@@ -20,23 +20,26 @@ function ProblemTemplate() {
   };
   const onStop = () => {};
   const onRefresh = () => {};
+  const problem = <ProblemDesc />;
+  const controller = <></>;
+  const viewer = <></>;
 
   return (
     <>
       {nowWidth > 900 ? (
         <Template
-          problem={<ProblemDesc />}
-          selector={<div>문제컴포넌트</div>}
-          viewer={<div>문제컴포넌트</div>}
+          problem={problem}
+          controller={controller}
+          viewer={viewer}
           onStart={onStart}
           onStop={onStop}
           onRefresh={onRefresh}
         />
       ) : (
         <MobileTemplate
-          problem={<ProblemDesc />}
-          selector={<div>문제컴포넌트</div>}
-          viewer={<div>문제컴포넌트</div>}
+          problem={problem}
+          controller={controller}
+          viewer={viewer}
           onStart={onStart}
           onStop={onStop}
           onRefresh={onRefresh}

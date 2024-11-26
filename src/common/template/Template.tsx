@@ -6,7 +6,7 @@ import Footer from "./Footer";
 
 export default function Template(props: {
   problem: JSX.Element;
-  selector: JSX.Element;
+  controller: JSX.Element;
   viewer: JSX.Element;
   onStart: () => Promise<boolean> | boolean | void;
   onStop: () => void;
@@ -50,7 +50,7 @@ export default function Template(props: {
               },
               {
                 label: "예제 입력",
-                comp: props.selector,
+                comp: props.controller,
               },
             ]}
           />

@@ -51,7 +51,7 @@ function ChessBoard() {
         height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
       `}
     >
       <Typography variant="h6">{`배치한 퀸 : ${

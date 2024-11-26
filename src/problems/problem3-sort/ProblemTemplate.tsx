@@ -28,22 +28,26 @@ function ProblemTemplate() {
     problemStore.reset();
   };
 
+  const problem = <ProblemDesc />;
+  const controller = <Controller />;
+  const viewer = <SortBar />;
+
   return (
     <>
       {nowWidth > 900 ? (
         <Template
-          problem={<ProblemDesc />}
-          selector={<Controller />}
-          viewer={<SortBar />}
+          problem={problem}
+          controller={controller}
+          viewer={viewer}
           onStart={onStart}
           onStop={onStop}
           onRefresh={onRefresh}
         />
       ) : (
         <MobileTemplate
-          problem={<ProblemDesc />}
-          selector={<Controller />}
-          viewer={<SortBar />}
+          problem={problem}
+          controller={controller}
+          viewer={viewer}
           onStart={onStart}
           onStop={onStop}
           onRefresh={onRefresh}

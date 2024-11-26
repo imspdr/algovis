@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { useProblemStore } from "../store/ProblemStoreProvider";
 import { Typography, Slider } from "@mui/material";
 
-function Selector() {
+function Controller() {
   const problemStore = useProblemStore();
   const inputBlock = css`
     width: 100%;
@@ -82,4 +82,4 @@ function Selector() {
   );
 }
 
-export default observer(Selector);
+export default observer(Controller);
