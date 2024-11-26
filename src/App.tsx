@@ -104,6 +104,8 @@ export default function App() {
             align-items: center;
             justify-content: space-between;
             height: 48px;
+
+            min-width: 300px;
             padding: 0px 10px;
             ${unselectable}
           `}

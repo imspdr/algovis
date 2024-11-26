@@ -19,7 +19,7 @@ export default function MobileTemplate(props: {
         css={css`
           display: flex;
           flex-direction: column;
-          min-width: 500px;
+          min-width: 300px;
           width: 100%;
           height: calc(100% - 55px);
         `}

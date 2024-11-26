@@ -31,6 +31,7 @@ export default function Footer(props: {
         position: absolute;
         bottom: 0px;
         padding: 5px;
+        min-width: 290px;
         width: calc(100% - 10px);
         height: 50px;
       `}
@@ -49,30 +50,58 @@ export default function Footer(props: {
           align-items: center;
         `}
       >
-        <div>
+        <div
+          css={css`
+            width: 80px;
+            display: flex;
+            flex-direction: row;
+          `}
+        >
           <Button
             onClick={() => navigate("/")}
             color="inherit"
             css={css`
-              width: 40px;
+              width: 30px;
+              .MuiTouchRipple-root {
+                & .MuiTouchRipple-ripple {
+                  width: 32px;
+                  height: 32px;
+                }
+              }
             `}
           >
-            <ReorderIcon />
+            <ReorderIcon
+              css={css`
+                width: 24px;
+              `}
+            />
           </Button>
           {props.onChange && (
-            <Button onClick={props.onChange} color="inherit">
+            <Button
+              css={css`
+                width: 30px;
+              `}
+              onClick={props.onChange}
+              color="inherit"
+            >
               {!props.tab ? <SwitchLeftIcon /> : <SwitchRightIcon />}
             </Button>
           )}
         </div>
-        <div>
+        <div
+          css={css`
+            width: 160px;
+            display: flex;
+            flex-direction: row;
+          `}
+        >
           <Button
             onClick={props.onRefresh}
             disabled={start}
             variant="contained"
             color="inherit"
             css={css`
-              width: 80px;
+              width: 72px;
             `}
           >
             {"초기화"}
@@ -83,7 +112,7 @@ export default function Footer(props: {
             color="inherit"
             css={css`
               margin-left: 10px;
-              width: 80px;
+              width: 72px;
               background-color: ${start ? "var(--warning)" : "var(--highlight)"};
             `}
           >
