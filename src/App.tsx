@@ -124,13 +124,13 @@ export default function App() {
         >
           <Suspense fallback={<div>{"loading"}</div>}>
             <Routes>
-              <Route path="/home" element={<HomePage />} />
+              <Route path="/" element={<HomePage />} />
               <Route path="/nqueen" element={<Problem1Page />} />
               <Route path="/magicforest" element={<Problem2Page />} />
               <Route path="/sort" element={<Problem3Page />} />
               <Route path="/clock" element={<Problem4Page />} />
 
-              <Route path="*" element={<Navigate to="/home" replace />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>
         </div>
