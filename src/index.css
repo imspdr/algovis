@@ -29,19 +29,6 @@ body {
   margin: 0;
 }
 
-@font-face {
-  font-family: "GmarketSansMedium";
-  src: url("./fonts/GmarketSansMedium.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "D2Coding";
-  src: url("./fonts/D2Coding.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
 *::-webkit-scrollbar,
 *::-webkit-scrollbar-thumb {
   width: 8px !important;
