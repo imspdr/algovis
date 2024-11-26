@@ -1,7 +1,7 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import { lazy, Suspense, useState } from "react";
-import { Divider, Paper, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { css } from "@emotion/react";
 import { unselectable } from "@src/util";
 import ThemeToggle from "./common/ThemeToggle";
