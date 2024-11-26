@@ -8,7 +8,7 @@ module.exports = (env) => {
     entry: path.join(__dirname, "src/index.tsx"),
     devtool: env.development ? "eval-source-map" : false,
     output: {
-      path: path.join(__dirname, "build"),
+      path: path.join(__dirname, "docs"),
       filename: "main.js",
       publicPath: "/",
     },

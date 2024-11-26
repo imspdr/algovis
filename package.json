@@ -1,6 +1,7 @@
 {
   "name": "nodejs",
   "version": "0.1.0",
+  "hompage": "imspdr.github.io/cote-vis",
   "engines": {
     "node": ">=20.0.0"
   },
