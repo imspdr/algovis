@@ -26,21 +26,24 @@ function ExampleButtons() {
       }
     }
   };
+  const buttonCss = css`
+    width: 90px;
+    background-color: var(--highlight);
+  `;
   return (
     <div
       css={css`
-        padding: 20px;
+        padding: 10px;
         display: flex;
         flex-direction: row;
-        gap: 20px;
+        flex-wrap: wrap;
+        gap: 10px;
       `}
     >
       <Button
         variant="contained"
         color="inherit"
-        css={css`
-          background-color: var(--highlight);
-        `}
+        css={buttonCss}
         onClick={() => {
           navigator.clipboard
             .readText()
@@ -57,9 +60,7 @@ function ExampleButtons() {
       <Button
         variant="contained"
         color="inherit"
-        css={css`
-          background-color: var(--highlight);
-        `}
+        css={buttonCss}
         onClick={() => {
           setText("6 5 6\n2 3\n2 0\n4 2\n2 0\n2 0\n2 2");
         }}
@@ -67,9 +68,7 @@ function ExampleButtons() {
         예제1
       </Button>
       <Button
-        css={css`
-          background-color: var(--highlight);
-        `}
+        css={buttonCss}
         variant="contained"
         color="inherit"
         onClick={() => {
@@ -79,9 +78,7 @@ function ExampleButtons() {
         예제2
       </Button>
       <Button
-        css={css`
-          background-color: var(--highlight);
-        `}
+        css={buttonCss}
         variant="contained"
         color="inherit"
         onClick={() => {

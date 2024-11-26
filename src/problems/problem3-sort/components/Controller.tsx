@@ -85,7 +85,7 @@ function Controller() {
           id="demo-simple-select"
           value={problemStore.selectedAlgo}
           css={css`
-            width: 300px;
+            width: 200px;
             margin-top: 10px;
           `}
           onChange={(e) => {

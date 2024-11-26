@@ -6,8 +6,8 @@ import { Typography } from "@mui/material";
 
 function SortBar() {
   const sortStore = useProblemStore();
-  const HEIGHT = 8 * sortStore.numberArray.length;
-  const SINGLEWIDTH = 13;
+  const HEIGHT = 13 * sortStore.numberArray.length;
+  const SINGLEWIDTH = 21;
   return (
     <div
       css={css`

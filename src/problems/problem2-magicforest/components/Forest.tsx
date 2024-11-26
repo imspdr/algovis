@@ -15,11 +15,23 @@ function Cell(props: { i: number; j: number; C: number; color: string; person: b
         background-color: ${color};
         display: flex;
         border: ${i < 3 ? "0px" : "1px solid"};
+        border-width: 1px 1px 1px ${j == 0 ? "1px" : "0px"};
         align-items: center;
         justify-content: center;
       `}
     >
-      {person && (C < 20 ? <AccessibilityNewIcon sx={{ fontSize: "inherit" }} /> : "-")}
+      {person &&
+        (C < 20 ? (
+          <AccessibilityNewIcon sx={{ fontSize: "inherit" }} />
+        ) : (
+          <span
+            css={css`
+              font-size: 8px;
+            `}
+          >
+            {"-"}
+          </span>
+        ))}
     </div>
   );
 }
@@ -49,15 +61,20 @@ function Forest() {
     <div
       css={css`
         width: 100%;
-        height: 100%;
+        height: 99%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
       `}
     >
-      <Typography variant="h6">{`${problemStore.n}번째 골렘 처리중`}</Typography>
-      <Typography variant="h6">{` 현재 스코어 : ${problemStore.nowScore}`}</Typography>
+      <div>
+        <Typography variant="h6">{`${problemStore.n}번째 골렘 처리중`}</Typography>
+        <Typography variant="h6">{` 현재 스코어 : ${problemStore.nowScore}`}</Typography>
+      </div>
       <div
         css={css`
           width: 100%;
-          height: calc(100% - ${problemStore.R * 2 + 80}px);
+          height: calc(100% - ${problemStore.R * 2 + 100}px);
         `}
       >
         {[...new Array(problemStore.R + 3)].map((_, i) => {
@@ -67,7 +84,6 @@ function Forest() {
               css={css`
                 display: flex;
                 flex-direcion: row;
-                border: ${i < 3 ? "0px" : "1px solid"};
                 height: ${(100 / (problemStore.R + 3)).toFixed(4)}%;
               `}
             >

@@ -13,30 +13,30 @@ import Problem4Page from "@src/problems/problem4-clock/ProblemMain";
 
 type CodingTest = {
   name: string;
-  url: string;
   desc: string;
+  url: string;
 };
 
 export const codingTests: CodingTest[] = [
   {
     url: "nqueen",
-    name: "N-queen 문제",
+    name: "n-queen 문제",
     desc: "백트래킹으로 해결하는 n-queen 문제",
   },
   {
     url: "magicforest",
     name: "마법의 숲 탐색",
-    desc: "삼성 SW 역량테스트 2024 상반기 오후 1번 문제",
+    desc: "2024 삼성 SW 역량테스트 마법의 숲 탐색",
   },
   {
     url: "sort",
-    name: "정렬 알고리즘",
-    desc: "bubble, quick, merge sort 시각화",
+    name: "정렬 시각화",
+    desc: "정렬 알고리즘 시각화",
   },
   {
     url: "clock",
     name: "아날로그 시계",
-    desc: "[PCCP 기출문제] 3번 / 아날로그 시계",
+    desc: "[PCCP 기출문제] 3번 아날로그 시계",
   },
 ];
 

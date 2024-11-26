@@ -11,13 +11,12 @@ export default function HomePage() {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 20px;
       `}
     >
       <Paper
         elevation={0}
         css={css`
-          width: 480px;
+          width: 300px;
           border-radius: 10px;
           border: 1px solid;
         `}
@@ -41,17 +40,7 @@ export default function HomePage() {
                 <Typography
                   key={`title-${cote.name}`}
                   css={css`
-                    width: 120px;
-                  `}
-                  variant="body2"
-                >
-                  {cote.name}
-                </Typography>
-                -
-                <Typography
-                  key={`desc-${cote.name}`}
-                  css={css`
-                    margin-left: 10px;
+                    margin-right: 10px;
                   `}
                   variant="body2"
                 >
