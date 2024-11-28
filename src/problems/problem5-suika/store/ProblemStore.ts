@@ -6,7 +6,8 @@ import { circleCollision } from "./physics";
 const EPSILON = 0.1;
 const WIDTH = 1000;
 const HEIGHT = 1600;
-const MESS = 1000;
+const MESS = 2000;
+const INTERVAL = 20;
 export const RADIUS = 20;
 
 class ProblemStore {
@@ -31,7 +32,7 @@ class ProblemStore {
 
   constructor() {
     // 한번 iter당 계산수
-    this.t = 2;
+    this.t = 3;
     this.fruits = [];
     this.renderFruits = [];
 
@@ -91,7 +92,7 @@ class ProblemStore {
       runInAction(() => {
         this.renderFruits = this.fruits;
       });
-    }, 20);
+    }, INTERVAL);
   };
 
   stop = () => {
@@ -109,10 +110,10 @@ class ProblemStore {
   };
 
   addFruit = async () => {
+    if (this.loseFlag) {
+      this.start();
+    }
     if (this.createFlag || this.stopFlag) return;
-    // if (this.stopFlag || this.loseFlag) {
-    //   this.start();
-    // }
     runInAction(() => {
       this.createFlag = true;
       this.fruits = [
@@ -151,6 +152,7 @@ class ProblemStore {
   unitAction = () => {
     runInAction(() => {
       // unit move
+      this.fruits = this.fruits.filter((fruit) => fruit).sort((a, b) => a!.radius - b!.radius);
       for (let n = 0; n < this.t; n++) {
         for (let i = 0; i < this.fruits.length; i++) {
           let fruit = this.fruits[i];

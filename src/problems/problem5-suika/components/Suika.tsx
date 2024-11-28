@@ -13,14 +13,14 @@ function Suika() {
       problemStore.setPosX(problemStore.posX + 20);
     } else if (ev.key === "ArrowLeft") {
       problemStore.setPosX(problemStore.posX - 20);
-    } else if (ev.key === "Enter") {
+    } else if (ev.key === "d") {
       problemStore.addFruit();
-    } else if (ev.key === " ") {
-      if (problemStore.stopFlag) {
-        problemStore.start();
-      } else {
-        problemStore.stop();
-      }
+      // } else if (ev.key === " ") {
+      //   if (problemStore.stopFlag) {
+      //     problemStore.start();
+      //   } else {
+      //     problemStore.stop();
+      //   }
     } else if (ev.key === "r") {
       problemStore.reset();
     }
@@ -40,7 +40,10 @@ function Suika() {
   ];
   useEffect(() => {
     window.addEventListener("keydown", keyDownEvent);
-    return () => window.removeEventListener("keydown", keyDownEvent);
+    return () => {
+      window.removeEventListener("keydown", keyDownEvent);
+      problemStore.stop();
+    };
   }, []);
 
   const handleSvgClick = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {

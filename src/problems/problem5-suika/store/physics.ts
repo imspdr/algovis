@@ -21,8 +21,8 @@ const getVectorCal = (v1: twod, v2: twod, cal: string): twod => {
 const nearby = (fruit1: fruit, fruit2: fruit) => {
   const dist = fruit1.radius + fruit2.radius;
   if (
-    Math.abs(fruit1.pos.x - fruit1.pos.x) > dist ||
-    Math.abs(fruit1.pos.y - fruit1.pos.y) > dist
+    Math.abs(fruit1.pos.x - fruit1.pos.x) > dist + 1 ||
+    Math.abs(fruit1.pos.y - fruit1.pos.y) > dist + 1
   ) {
     return false;
   }
