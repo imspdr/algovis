@@ -10,6 +10,7 @@ import Problem1Page from "@src/problems/problem1-nqueen/ProblemMain";
 import Problem2Page from "@src/problems/problem2-magicforest/ProblemMain";
 import Problem3Page from "@src/problems/problem3-sort/ProblemMain";
 import Problem4Page from "@src/problems/problem4-clock/ProblemMain";
+import Problem5Page from "@src/problems/problem5-suika/ProblemMain";
 
 type CodingTest = {
   name: string;
@@ -37,6 +38,11 @@ export const codingTests: CodingTest[] = [
     url: "clock",
     name: "아날로그 시계",
     desc: "[PCCP 기출문제] 3번 아날로그 시계",
+  },
+  {
+    url: "suika",
+    name: "수박 게임",
+    desc: "수박 게임 직접 구현해보기",
   },
 ];
 
@@ -131,6 +137,7 @@ export default function App() {
               <Route path="/magicforest" element={<Problem2Page />} />
               <Route path="/sort" element={<Problem3Page />} />
               <Route path="/clock" element={<Problem4Page />} />
+              <Route path="/suika" element={<Problem5Page />} />
 
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
