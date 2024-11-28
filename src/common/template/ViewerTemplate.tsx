@@ -20,7 +20,6 @@ export default function ViewerTemplate(props: { viewer: JSX.Element }) {
           background-color: var(--paper);
         `}
       >
-        <Typography variant="h5">시각화 영역</Typography>
         <div
           css={css`
             margin-top: 10px;
