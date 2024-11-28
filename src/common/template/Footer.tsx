@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import SwitchLeftIcon from "@mui/icons-material/SwitchLeft";
 import SwitchRightIcon from "@mui/icons-material/SwitchRight";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import StopIcon from "@mui/icons-material/Stop";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 export default function Footer(props: {
   onStart: () => Promise<boolean> | boolean | void;
@@ -57,54 +60,23 @@ export default function Footer(props: {
             flex-direction: row;
           `}
         >
-          <Button
-            onClick={() => navigate("/")}
-            color="inherit"
-            css={css`
-              width: 30px;
-              .MuiTouchRipple-root {
-                & .MuiTouchRipple-ripple {
-                  width: 32px;
-                  height: 32px;
-                }
-              }
-            `}
-          >
-            <ReorderIcon
-              css={css`
-                width: 24px;
-              `}
-            />
+          <Button onClick={() => navigate("/")} color="inherit">
+            <ReorderIcon />
           </Button>
           {props.onChange && (
-            <Button
-              css={css`
-                width: 30px;
-              `}
-              onClick={props.onChange}
-              color="inherit"
-            >
+            <Button onClick={props.onChange} color="inherit">
               {!props.tab ? <SwitchLeftIcon /> : <SwitchRightIcon />}
             </Button>
           )}
         </div>
         <div
           css={css`
-            width: 160px;
             display: flex;
             flex-direction: row;
           `}
         >
-          <Button
-            onClick={props.onRefresh}
-            disabled={start}
-            variant="contained"
-            color="inherit"
-            css={css`
-              width: 72px;
-            `}
-          >
-            {"초기화"}
+          <Button onClick={props.onRefresh} disabled={start} color="inherit">
+            <RefreshIcon />
           </Button>
           <Button
             onClick={onClick}
@@ -112,11 +84,10 @@ export default function Footer(props: {
             color="inherit"
             css={css`
               margin-left: 10px;
-              width: 72px;
               background-color: ${start ? "var(--warning)" : "var(--highlight)"};
             `}
           >
-            {start ? "정지" : "시작"}
+            {start ? <StopIcon /> : <PlayArrowIcon />}
           </Button>
         </div>
       </div>
