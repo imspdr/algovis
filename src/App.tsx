@@ -1,11 +1,16 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
-import { lazy, Suspense, useState } from "react";
+import { useState } from "react";
 import { Typography } from "@mui/material";
 import { css } from "@emotion/react";
 import { unselectable } from "@src/util";
 import ThemeToggle from "./common/ThemeToggle";
 import HomePage from "./common/HomePage";
+import Problem1Page from "@src/problems/problem1-nqueen/ProblemMain";
+import Problem2Page from "@src/problems/problem2-magicforest/ProblemMain";
+import Problem3Page from "@src/problems/problem3-sort/ProblemMain";
+import Problem4Page from "@src/problems/problem4-clock/ProblemMain";
+import Problem5Page from "@src/problems/problem5-suika/ProblemMain";
 
 type CodingTest = {
   name: string;
@@ -58,11 +63,6 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(false);
   const url = window.location.href.split("/");
   const label = codingTests.find((val) => val.url === url[url.length - 1]);
-  const Problem1Page = lazy(() => import("@src/problems/problem1-nqueen/ProblemMain"));
-  const Problem2Page = lazy(() => import("@src/problems/problem2-magicforest/ProblemMain"));
-  const Problem3Page = lazy(() => import("@src/problems/problem3-sort/ProblemMain"));
-  const Problem4Page = lazy(() => import("@src/problems/problem4-clock/ProblemMain"));
-  const Problem5Page = lazy(() => import("@src/problems/problem5-suika/ProblemMain"));
   const toggleTheme = () => {
     const styles = getComputedStyle(document.body);
 
@@ -129,33 +129,16 @@ export default function App() {
             ${unselectable}
           `}
         >
-          <Suspense
-            fallback={
-              <div
-                css={css`
-                  width: 100%;
-                  height: 100%;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  font-size: 20px;
-                `}
-              >
-                {"loading..."}
-              </div>
-            }
-          >
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/nqueen" element={<Problem1Page />} />
-              <Route path="/magicforest" element={<Problem2Page />} />
-              <Route path="/sort" element={<Problem3Page />} />
-              <Route path="/clock" element={<Problem4Page />} />
-              <Route path="/suika" element={<Problem5Page />} />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/nqueen" element={<Problem1Page />} />
+            <Route path="/magicforest" element={<Problem2Page />} />
+            <Route path="/sort" element={<Problem3Page />} />
+            <Route path="/clock" element={<Problem4Page />} />
+            <Route path="/suika" element={<Problem5Page />} />
 
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Suspense>
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
         </div>
       </>
     </ThemeProvider>
