@@ -47,7 +47,7 @@ export const circleCollision = (
     // 만약 같은 종류의 과일일 경우 중점에 새 과일
     if (fruit1.radius === fruit2.radius) {
       // 일정 크기 이상일 경우 가장 작은 크기로 회귀
-      if (fruit1.radius > 28.9 * RADIUS) {
+      if (fruit1.radius > 20 * RADIUS) {
         return {
           fruit1: {
             ...fruit1,
@@ -55,7 +55,7 @@ export const circleCollision = (
               x: (fruit1.pos.x + fruit2.pos.x) / 2,
               y: (fruit1.pos.y + fruit2.pos.y) / 2,
             },
-            radius: 6,
+            radius: RADIUS,
             fillIndex: 0,
           },
           fruit2: undefined,

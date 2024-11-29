@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { css } from "@emotion/react";
 import ViewerTemplate from "./ViewerTemplate";
 import LeftTab from "./LeftTab";

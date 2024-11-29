@@ -3,6 +3,14 @@ import { observer } from "mobx-react";
 import { useProblemStore } from "../store/ProblemStoreProvider";
 import { Typography, Slider } from "@mui/material";
 
+type Control = {
+  desc: string;
+  value: number;
+  setValue: (v: number) => void;
+  min: number;
+  max: number;
+  step: number;
+};
 function Controller() {
   const problemStore = useProblemStore();
   const inputBlock = css`
@@ -12,7 +20,48 @@ function Controller() {
     gap: 10px;
     align-items: flex-start;
   `;
-
+  const controls: Control[] = [
+    {
+      desc: "중력",
+      value: problemStore.gravity,
+      setValue: problemStore.setGravity,
+      min: 1,
+      max: 9,
+      step: 1,
+    },
+    {
+      desc: "충돌 세기",
+      value: problemStore.collisionPower,
+      setValue: problemStore.setCollisionPower,
+      min: 10,
+      max: 90,
+      step: 10,
+    },
+    {
+      desc: "탄성",
+      value: problemStore.lossRate,
+      setValue: problemStore.setLossRate,
+      min: 0.1,
+      max: 0.9,
+      step: 0.1,
+    },
+    {
+      desc: "프레임 당 계산 횟수",
+      value: problemStore.t,
+      setValue: problemStore.setT,
+      min: 1,
+      max: 9,
+      step: 1,
+    },
+    {
+      desc: "충돌 시 부수 효과 계산 횟수",
+      value: problemStore.effect,
+      setValue: problemStore.setEffect,
+      min: 1,
+      max: 5,
+      step: 1,
+    },
+  ];
   return (
     <div
       css={css`
@@ -24,84 +73,40 @@ function Controller() {
         gap: 20px;
       `}
     >
-      <div css={inputBlock}>
-        <Typography variant="h6">{`중력 : ${problemStore.gravity}`}</Typography>
-        <Slider
-          aria-label="delay"
-          value={problemStore.gravity}
-          step={1}
-          min={1}
-          max={10}
-          marks={[
-            {
-              value: 1,
-              label: "1",
-            },
-            {
-              value: 10,
-              label: "10",
-            },
-          ]}
-          css={css`
-            color: var(--highlight);
-          `}
-          onChange={(e, v) => {
-            problemStore.setGravity(v as number);
-          }}
-        />
-      </div>
-      <div css={inputBlock}>
-        <Typography variant="h6">{`충돌 세기: ${problemStore.collisionPower}`}</Typography>
-        <Slider
-          aria-label="delay"
-          value={problemStore.collisionPower}
-          step={10}
-          min={10}
-          max={50}
-          marks={[
-            {
-              value: 10,
-              label: "10",
-            },
-            {
-              value: 50,
-              label: "50",
-            },
-          ]}
-          css={css`
-            color: var(--highlight);
-          `}
-          onChange={(e, v) => {
-            problemStore.setCollisionPower(v as number);
-          }}
-        />
-      </div>
-      <div css={inputBlock}>
-        <Typography variant="h6">{`탄성 : ${problemStore.lossRate}`}</Typography>
-        <Slider
-          aria-label="delay"
-          value={problemStore.lossRate}
-          step={0.1}
-          min={0.1}
-          max={0.8}
-          marks={[
-            {
-              value: 0.1,
-              label: "0.1",
-            },
-            {
-              value: 0.8,
-              label: "0.8",
-            },
-          ]}
-          css={css`
-            color: var(--highlight);
-          `}
-          onChange={(e, v) => {
-            problemStore.setLossRate(v as number);
-          }}
-        />
-      </div>
+      {controls.map((control: Control) => {
+        return (
+          <div key={`${control.desc}`} css={inputBlock}>
+            <Typography
+              key={`${control.desc}-title`}
+              variant="h6"
+            >{`${control.desc} : ${control.value}`}</Typography>
+            <Slider
+              key={`${control.desc}-slider`}
+              aria-label="delay"
+              value={control.value}
+              step={control.step}
+              min={control.min}
+              max={control.max}
+              marks={[
+                {
+                  value: control.min,
+                  label: String(control.min),
+                },
+                {
+                  value: control.max,
+                  label: String(control.max),
+                },
+              ]}
+              css={css`
+                color: var(--highlight);
+              `}
+              onChange={(e, v) => {
+                control.setValue(v as number);
+              }}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }

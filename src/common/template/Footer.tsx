@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ReorderIcon from "@mui/icons-material/Reorder";
@@ -13,8 +13,8 @@ export default function Footer(props: {
   onStart: () => Promise<boolean> | boolean | void;
   onStop: () => void;
   onRefresh: () => void;
-  tab?: boolean;
   onChange?: () => void;
+  tab?: boolean;
 }) {
   const navigate = useNavigate();
   const [start, setStart] = useState(false);
@@ -28,6 +28,12 @@ export default function Footer(props: {
       if (ret) setStart(false);
     }
   };
+  useEffect(() => {
+    return () => {
+      props.onStop();
+      setStart(false);
+    };
+  }, [props.tab]);
   return (
     <div
       css={css`

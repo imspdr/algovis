@@ -1,4 +1,4 @@
-import { useState, FC } from "react";
+import { useState, useEffect } from "react";
 import { css } from "@emotion/react";
 import LeftTab from "./LeftTab";
 import ViewerTemplate from "./ViewerTemplate";
@@ -13,6 +13,7 @@ export default function MobileTemplate(props: {
   onRefresh: () => void;
 }) {
   const [tabState, setTabState] = useState(true);
+
   return (
     <>
       <div

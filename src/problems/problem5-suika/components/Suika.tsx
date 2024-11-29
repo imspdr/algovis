@@ -36,13 +36,11 @@ function Suika() {
     "#e65100",
     "#01579b",
     "#c62828",
-    "#999999",
   ];
   useEffect(() => {
     window.addEventListener("keydown", keyDownEvent);
     return () => {
       window.removeEventListener("keydown", keyDownEvent);
-      problemStore.stop();
     };
   }, []);
 

@@ -13,6 +13,7 @@ export const RADIUS = 20;
 class ProblemStore {
   interval: any | undefined;
   t: number;
+  effect: number;
   fruits: (fruit | undefined)[];
   renderFruits: (fruit | undefined)[];
 
@@ -31,8 +32,10 @@ class ProblemStore {
   nowFill: number;
 
   constructor() {
-    // 한번 iter당 계산수
+    // 한번 iter당 계산 횟수
     this.t = 3;
+    // 추가 효과 계산 횟수
+    this.effect = 2;
     this.fruits = [];
     this.renderFruits = [];
 
@@ -53,23 +56,33 @@ class ProblemStore {
     makeAutoObservable(this);
   }
 
-  setGravity(value: number) {
+  setT = (value: number) => {
+    runInAction(() => {
+      this.t = value;
+    });
+  };
+  setEffect = (value: number) => {
+    runInAction(() => {
+      this.effect = value;
+    });
+  };
+  setGravity = (value: number) => {
     runInAction(() => {
       this.gravity = value;
     });
-  }
-  setCollisionPower(value: number) {
+  };
+  setCollisionPower = (value: number) => {
     runInAction(() => {
       this.collisionPower = value;
     });
-  }
-  setLossRate(value: number) {
+  };
+  setLossRate = (value: number) => {
     runInAction(() => {
       this.lossRate = value;
     });
-  }
+  };
 
-  setPosX(pos: number) {
+  setPosX = (pos: number) => {
     runInAction(() => {
       if (pos > WIDTH - this.nowRadius) {
         this.posX = this.nowRadius;
@@ -79,7 +92,7 @@ class ProblemStore {
         this.posX = pos;
       }
     });
-  }
+  };
 
   start = () => {
     if (this.loseFlag) this.reset();
@@ -152,7 +165,7 @@ class ProblemStore {
   unitAction = () => {
     runInAction(() => {
       // unit move
-      this.fruits = this.fruits.filter((fruit) => fruit).sort((a, b) => a!.radius - b!.radius);
+      this.fruits = this.fruits.filter((fruit) => fruit);
       for (let n = 0; n < this.t; n++) {
         for (let i = 0; i < this.fruits.length; i++) {
           let fruit = this.fruits[i];
@@ -196,22 +209,24 @@ class ProblemStore {
               };
             } else return fruit;
           });
-          for (let j = 0; j < this.fruits.length; j++) {
-            if (!this.fruits[i] || !this.fruits[j] || i === j) continue;
+          for (let k = 0; k < this.effect; k++) {
+            for (let j = 0; j < this.fruits.length; j++) {
+              if (!this.fruits[i] || !this.fruits[j] || j == i) continue;
 
-            let newFruits = circleCollision(
-              this.fruits[i]!,
-              this.fruits[j]!,
-              this.collisionPower,
-              this.lossRate / MESS
-            );
-            this.fruits = this.fruits.map((fruit, index) => {
-              if (index === i) {
-                return newFruits.fruit1;
-              } else if (index === j) {
-                return newFruits.fruit2;
-              } else return fruit;
-            });
+              let newFruits = circleCollision(
+                this.fruits[i]!,
+                this.fruits[j]!,
+                this.collisionPower,
+                this.lossRate / MESS
+              );
+              this.fruits = this.fruits.map((fruit, index) => {
+                if (index === i) {
+                  return newFruits.fruit1;
+                } else if (index === j) {
+                  return newFruits.fruit2;
+                } else return fruit;
+              });
+            }
           }
         }
       }
