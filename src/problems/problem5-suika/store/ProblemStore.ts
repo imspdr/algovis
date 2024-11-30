@@ -85,9 +85,9 @@ class ProblemStore {
   setPosX = (pos: number) => {
     runInAction(() => {
       if (pos > WIDTH - this.nowRadius) {
-        this.posX = this.nowRadius;
-      } else if (pos < this.nowRadius) {
         this.posX = WIDTH - this.nowRadius;
+      } else if (pos < this.nowRadius) {
+        this.posX = this.nowRadius;
       } else {
         this.posX = pos;
       }
