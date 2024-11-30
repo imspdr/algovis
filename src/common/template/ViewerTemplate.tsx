@@ -18,18 +18,10 @@ export default function ViewerTemplate(props: { viewer: JSX.Element }) {
           border-radius: 10px;
           height: calc(100% - 40px);
           background-color: var(--paper);
+          overflow: auto;
         `}
       >
-        <div
-          css={css`
-            margin-top: 10px;
-            overflow: auto;
-            width: 100%;
-            height: calc(100% - 55px);
-          `}
-        >
-          {props.viewer}
-        </div>
+        {props.viewer}
       </div>
     </div>
   );
