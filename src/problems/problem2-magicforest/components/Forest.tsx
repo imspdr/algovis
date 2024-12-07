@@ -60,8 +60,9 @@ function Forest() {
   return (
     <div
       css={css`
-        width: 100%;
-        height: 99%;
+        width: calc(100% - 40px);
+        height: calc(99% - 40px);
+        padding: 20px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;

@@ -38,9 +38,9 @@ function Suika() {
     "#c62828",
   ];
   useEffect(() => {
-    window.addEventListener("keydown", keyDownEvent);
+    addEventListener("keydown", keyDownEvent);
     return () => {
-      window.removeEventListener("keydown", keyDownEvent);
+      removeEventListener("keydown", keyDownEvent);
     };
   }, []);
 
@@ -55,8 +55,12 @@ function Suika() {
   return (
     <div
       css={css`
-        width: 100%;
-        height: 100%;
+        padding: 10px;
+        height: calc(100% - 20px);
+        width: calc(100% - 20px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       `}
     >
       <div

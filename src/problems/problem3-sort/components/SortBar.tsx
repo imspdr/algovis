@@ -14,8 +14,9 @@ function SortBar() {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 100%;
-        width: 100%;
+        padding: 20px;
+        height: calc(100% - 40px);
+        width: calc(100% - 40px);
       `}
     >
       <Typography variant="h6">{`비교 수 : ${sortStore.compareCount}`}</Typography>

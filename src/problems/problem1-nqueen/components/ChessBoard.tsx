@@ -47,8 +47,9 @@ function ChessBoard() {
   return (
     <div
       css={css`
-        width: 100%;
-        height: 100%;
+        width: calc(100% - 40px);
+        height: calc(100% - 40px);
+        padding: 20px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;

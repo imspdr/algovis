@@ -13,10 +13,9 @@ export default function ViewerTemplate(props: { viewer: JSX.Element }) {
     >
       <div
         css={css`
-          padding: 20px;
           border: 1px solid;
           border-radius: 10px;
-          height: calc(100% - 40px);
+          height: calc(100%);
           background-color: var(--paper);
           overflow: auto;
         `}
