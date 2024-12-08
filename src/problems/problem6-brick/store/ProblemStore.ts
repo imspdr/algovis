@@ -89,7 +89,7 @@ class ProblemStore {
     this.stopFlag = true;
     this.createFlag = false;
 
-    this.gravity = -0.5;
+    this.gravity = -0.45;
     this.upperPower = 10;
     this.horizontalPower = 1;
 

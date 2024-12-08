@@ -23,11 +23,11 @@ function Controller() {
   const controls: Control[] = [
     {
       desc: "중력",
-      value: problemStore.gravity,
+      value: -problemStore.gravity,
       setValue: problemStore.setGravity,
       min: 0.1,
       max: 0.9,
-      step: 0.1,
+      step: 0.05,
     },
     {
       desc: "윗방향 힘",
