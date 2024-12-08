@@ -5,6 +5,7 @@ import { observer } from "mobx-react";
 import { useProblemStore } from "./store/ProblemStoreProvider";
 import ProblemDesc from "./components/ProblemDesc";
 import Brick from "./components/Brick";
+import Controller from "./components/Controller";
 
 function ProblemTemplate() {
   const [nowWidth, setNowWidth] = useState(window.innerWidth);
@@ -33,7 +34,7 @@ function ProblemTemplate() {
     problemStore.reset();
   };
   const problem = <ProblemDesc />;
-  const controller = <span>해당 문제에는 조작할 변수가 없습니다</span>;
+  const controller = <Controller />;
   const viewer = <Brick />;
 
   return (

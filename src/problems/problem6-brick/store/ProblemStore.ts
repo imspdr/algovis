@@ -89,9 +89,9 @@ class ProblemStore {
     this.stopFlag = true;
     this.createFlag = false;
 
-    this.gravity = -0.025 * INTERVAL;
-    this.upperPower = 0.6 * INTERVAL;
-    this.horizontalPower = 0.08 * INTERVAL;
+    this.gravity = -0.5;
+    this.upperPower = 10;
+    this.horizontalPower = 1;
 
     makeAutoObservable(this);
   }
@@ -104,6 +104,27 @@ class ProblemStore {
       });
     }
   };
+  setHoleWidth = (v: number) => {
+    runInAction(() => {
+      this.holeWidth = v;
+    });
+  };
+  setGravity = (v: number) => {
+    runInAction(() => {
+      this.gravity = -v;
+    });
+  };
+  setUpperPower = (v: number) => {
+    runInAction(() => {
+      this.upperPower = v;
+    });
+  };
+  setHorizontalPower = (v: number) => {
+    runInAction(() => {
+      this.horizontalPower = v;
+    });
+  };
+
   getViewY = (y: number) => {
     return this.height / 2 - y + this.nowHeight;
   };
