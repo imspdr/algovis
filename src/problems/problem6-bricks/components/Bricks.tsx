@@ -3,13 +3,29 @@ import { observer } from "mobx-react";
 import { css } from "@emotion/react";
 import { useProblemStore } from "../store/ProblemStoreProvider";
 
+const fillIndex = [
+  "#94d6c5",
+  "#3a987f",
+  "#d694c6",
+  "#c15da9",
+  "#ffd700",
+  "#645047",
+  "#ff8c00",
+  "#e65100",
+  "#01579b",
+  "#c62828",
+];
+
 function Bricks() {
   const problemStore = useProblemStore();
 
   useEffect(() => {
-    addEventListener("keydown", keyDownEvent);
+    setView();
+    window.addEventListener("keydown", keyDownEvent);
+    window.addEventListener("resize", setView);
     return () => {
-      removeEventListener("keydown", keyDownEvent);
+      window.removeEventListener("resize", setView);
+      window.removeEventListener("keydown", keyDownEvent);
     };
   }, []);
 
@@ -19,26 +35,23 @@ function Bricks() {
     } else if (ev.key === "ArrowLeft") {
       problemStore.left();
     } else if (ev.key === " ") {
+      problemStore.start();
     }
   };
-  const fillIndex = [
-    "#94d6c5",
-    "#3a987f",
-    "#d694c6",
-    "#c15da9",
-    "#ffd700",
-    "#645047",
-    "#ff8c00",
-    "#e65100",
-    "#01579b",
-    "#c62828",
-  ];
+  const setView = () => {
+    const parent = document.getElementById("bricks-frame");
+    if (parent) {
+      problemStore.width = parent.offsetWidth;
+      problemStore.height = parent.offsetHeight;
+      problemStore.reset();
+    }
+  };
   const handleSvgClick = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     const svgElement = event.currentTarget;
     const rect = svgElement.getBoundingClientRect();
 
-    const x = ((event.clientX - rect.left) / rect.width) * 1000;
-    if (x > 500) {
+    const x = (event.clientX - rect.left) / rect.width;
+    if (x > 0.5) {
       problemStore.right();
     } else {
       problemStore.left();
@@ -48,23 +61,40 @@ function Bricks() {
   return (
     <div
       css={css`
-        padding: 1px;
-        height: calc(100% - 2px);
-        width: calc(100% - 2px);
+        height: calc(100%);
+        width: calc(100%);
         display: flex;
         flex-direction: column;
         align-items: center;
       `}
+      id="bricks-frame"
     >
-      <div
+      <svg
         css={css`
-          height: calc(100% - 5px);
-          aspect-ratio: 10 / 16;
-          border: 1px solid;
+          width: 100%;
+          height: 100%;
         `}
+        onClick={handleSvgClick}
       >
-        <svg viewBox={`0 0 1000 1600`} onClick={handleSvgClick}></svg>
-      </div>
+        <text x={50} y={50}>
+          {problemStore.nowHeight}
+        </text>
+        <>{problemStore.activeWalls.map((y: number) => {})}</>
+        <polygon
+          points={`${problemStore.brick.pos.x},${
+            problemStore.getViewY(problemStore.brick.pos.y) - problemStore.radius
+          } ${problemStore.brick.pos.x + problemStore.radius},${problemStore.getViewY(
+            problemStore.brick.pos.y
+          )} ${problemStore.brick.pos.x},${
+            problemStore.getViewY(problemStore.brick.pos.y) + problemStore.radius
+          } ${problemStore.brick.pos.x - problemStore.radius},${problemStore.getViewY(
+            problemStore.brick.pos.y
+          )}`}
+          fill="var(--foreground)"
+          stroke="var(--foreground)"
+          stroke-width="2"
+        />
+      </svg>
     </div>
   );
 }

@@ -47,7 +47,7 @@ export const codingTests: CodingTest[] = [
   },
   {
     url: "bricks",
-    name: "Amazing Bricks",
+    name: "Bricks",
     desc: "Amazing Bricks 구현해보기",
   },
 ];
@@ -122,7 +122,7 @@ export default function App() {
           `}
         >
           <Typography onClick={() => navigate("/")}>
-            {!!!label ? "IMSPDR / cotevis" : `IMSPDR / cotevis / ${label.name}`}
+            {!!!label ? "IMSPDR / algovis" : `IMSPDR / algovis / ${label.name}`}
           </Typography>
           <ThemeToggle onClick={toggleTheme} isDark={darkMode} />
         </div>

@@ -16,6 +16,7 @@ function ProblemTemplate() {
 
   const problemStore = useProblemStore();
 
+  const start = !problemStore.stopFlag;
   const onStart = async () => {
     problemStore.start();
     return problemStore.stopFlag;
@@ -37,6 +38,7 @@ function ProblemTemplate() {
           problem={problem}
           controller={controller}
           viewer={viewer}
+          start={start}
           onStart={onStart}
           onStop={onStop}
           onRefresh={onRefresh}
@@ -46,6 +48,7 @@ function ProblemTemplate() {
           problem={problem}
           controller={controller}
           viewer={viewer}
+          start={start}
           onStart={onStart}
           onStop={onStop}
           onRefresh={onRefresh}

@@ -8,6 +8,7 @@ export default function Template(props: {
   problem: JSX.Element;
   controller: JSX.Element;
   viewer: JSX.Element;
+  start: boolean;
   onStart: () => Promise<boolean> | boolean | void;
   onStop: () => void;
   onRefresh: () => void;
@@ -80,7 +81,12 @@ export default function Template(props: {
           <ViewerTemplate viewer={props.viewer} />
         </div>
       </div>
-      <Footer onStart={props.onStart} onStop={props.onStop} onRefresh={props.onRefresh} />
+      <Footer
+        start={props.start}
+        onStart={props.onStart}
+        onStop={props.onStop}
+        onRefresh={props.onRefresh}
+      />
     </>
   );
 }

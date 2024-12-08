@@ -17,6 +17,7 @@ function ProblemTemplate() {
 
   const problemStore = useProblemStore();
 
+  const start = problemStore.running;
   const onStart = async () => {
     await problemStore.start();
     return true;
@@ -39,6 +40,7 @@ function ProblemTemplate() {
           problem={problem}
           controller={controller}
           viewer={viewer}
+          start={start}
           onStart={onStart}
           onStop={onStop}
           onRefresh={onRefresh}
@@ -48,6 +50,7 @@ function ProblemTemplate() {
           problem={problem}
           controller={controller}
           viewer={viewer}
+          start={start}
           onStart={onStart}
           onStop={onStop}
           onRefresh={onRefresh}

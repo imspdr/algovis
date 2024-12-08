@@ -11,7 +11,7 @@ module.exports = (env) => {
       output: {
         path: path.join(__dirname, "docs"),
         filename: "main.js",
-        publicPath: "/cotevis",
+        publicPath: "/algovis",
       },
       resolve: {
         extensions: [".js", ".jsx", ".ts", ".tsx"],
@@ -68,7 +68,7 @@ module.exports = (env) => {
       },
       devServer: {
         historyApiFallback: {
-          index: "/cotevis"
+          index: "/algovis"
         },
         host: "localhost",
         port: 4545,
@@ -82,7 +82,7 @@ module.exports = (env) => {
       output: {
         path: path.join(__dirname, "docs"),
         filename: "main.js",
-        publicPath: "/cotevis",
+        publicPath: "/algovis",
       },
       resolve: {
         extensions: [".js", ".jsx", ".ts", ".tsx"],

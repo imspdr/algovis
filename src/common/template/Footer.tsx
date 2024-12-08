@@ -10,6 +10,7 @@ import StopIcon from "@mui/icons-material/Stop";
 import RefreshIcon from "@mui/icons-material/Refresh";
 
 export default function Footer(props: {
+  start: boolean;
   onStart: () => Promise<boolean> | boolean | void;
   onStop: () => void;
   onRefresh: () => void;
@@ -17,21 +18,16 @@ export default function Footer(props: {
   tab?: boolean;
 }) {
   const navigate = useNavigate();
-  const [start, setStart] = useState(false);
   const onClick = async () => {
-    if (start) {
+    if (props.start) {
       props.onStop();
-      setStart(false);
     } else {
-      setStart(true);
-      const ret = await props.onStart();
-      if (ret) setStart(false);
+      props.onStart();
     }
   };
   useEffect(() => {
     return () => {
       props.onStop();
-      setStart(false);
     };
   }, [props.tab]);
   return (
@@ -81,7 +77,7 @@ export default function Footer(props: {
             flex-direction: row;
           `}
         >
-          <Button onClick={props.onRefresh} disabled={start} color="inherit">
+          <Button onClick={props.onRefresh} disabled={props.start} color="inherit">
             <RefreshIcon />
           </Button>
           <Button
@@ -90,10 +86,10 @@ export default function Footer(props: {
             color="inherit"
             css={css`
               margin-left: 10px;
-              background-color: ${start ? "var(--warning)" : "var(--highlight)"};
+              background-color: ${props.start ? "var(--warning)" : "var(--highlight)"};
             `}
           >
-            {start ? <StopIcon /> : <PlayArrowIcon />}
+            {props.start ? <StopIcon /> : <PlayArrowIcon />}
           </Button>
         </div>
       </div>

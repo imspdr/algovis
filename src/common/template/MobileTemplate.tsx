@@ -8,6 +8,7 @@ export default function MobileTemplate(props: {
   problem: JSX.Element;
   controller: JSX.Element;
   viewer: JSX.Element;
+  start: boolean;
   onStart: () => Promise<boolean> | boolean | void;
   onStop: () => void;
   onRefresh: () => void;
@@ -43,6 +44,7 @@ export default function MobileTemplate(props: {
         )}
       </div>
       <Footer
+        start={props.start}
         onStart={props.onStart}
         onRefresh={props.onRefresh}
         onStop={props.onStop}
