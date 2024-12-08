@@ -12,7 +12,7 @@ type wall = {
 };
 
 const WALLGAP = 30;
-const INTERVAL = 10;
+const INTERVAL = 20;
 
 const rectCrashCheck = (x: number, y: number, r: number, cx: number, cy: number, R: number) => {
   const yGap = Math.abs(y - cy);
@@ -89,9 +89,9 @@ class ProblemStore {
     this.stopFlag = true;
     this.createFlag = false;
 
-    this.gravity = -0.1;
-    this.upperPower = 5;
-    this.horizontalPower = 0.5;
+    this.gravity = -0.5;
+    this.upperPower = 10;
+    this.horizontalPower = 1;
 
     makeAutoObservable(this);
   }
@@ -243,6 +243,7 @@ class ProblemStore {
       let nowWall = this.activeWalls[i];
       if (nowWall) {
         if (Math.abs(nowWall.y - y) > (WALLGAP * this.radius) / 2) continue;
+
         let obsCheck = this.activeWalls[i]!.obs.reduce((a, c) => {
           return rectCrashCheck(x, y, this.radius, c.x, c.y, this.radius) || a;
         }, false);
@@ -274,6 +275,7 @@ class ProblemStore {
           )
             return true;
         }
+        return false;
       }
     }
     return false;

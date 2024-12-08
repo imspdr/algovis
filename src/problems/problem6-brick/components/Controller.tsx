@@ -41,9 +41,9 @@ function Controller() {
       desc: "가로방향 힘",
       value: problemStore.horizontalPower,
       setValue: problemStore.setHorizontalPower,
-      min: 0.1,
-      max: 0.9,
-      step: 0.1,
+      min: 0.5,
+      max: 5,
+      step: 0.5,
     },
   ];
   return (
