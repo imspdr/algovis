@@ -3,28 +3,15 @@ import { observer } from "mobx-react";
 import { css } from "@emotion/react";
 import { useProblemStore } from "../store/ProblemStoreProvider";
 
-const fillIndex = [
-  "#94d6c5",
-  "#3a987f",
-  "#d694c6",
-  "#c15da9",
-  "#ffd700",
-  "#645047",
-  "#ff8c00",
-  "#e65100",
-  "#01579b",
-  "#c62828",
-];
-
-function Bricks() {
+function Brick() {
   const problemStore = useProblemStore();
 
   useEffect(() => {
-    setView();
+    problemStore.reset();
     window.addEventListener("keydown", keyDownEvent);
-    window.addEventListener("resize", setView);
+    window.addEventListener("resize", problemStore.reset);
     return () => {
-      window.removeEventListener("resize", setView);
+      window.removeEventListener("resize", problemStore.reset);
       window.removeEventListener("keydown", keyDownEvent);
     };
   }, []);
@@ -35,15 +22,11 @@ function Bricks() {
     } else if (ev.key === "ArrowLeft") {
       problemStore.left();
     } else if (ev.key === " ") {
-      problemStore.start();
-    }
-  };
-  const setView = () => {
-    const parent = document.getElementById("bricks-frame");
-    if (parent) {
-      problemStore.width = parent.offsetWidth;
-      problemStore.height = parent.offsetHeight;
-      problemStore.reset();
+      if (problemStore.stopFlag) {
+        problemStore.start();
+      } else {
+        problemStore.stop();
+      }
     }
   };
   const handleSvgClick = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
@@ -67,7 +50,7 @@ function Bricks() {
         flex-direction: column;
         align-items: center;
       `}
-      id="bricks-frame"
+      id="brick-frame"
     >
       <svg
         css={css`
@@ -76,10 +59,43 @@ function Bricks() {
         `}
         onClick={handleSvgClick}
       >
-        <text x={50} y={50}>
-          {problemStore.nowHeight}
-        </text>
-        <>{problemStore.activeWalls.map((y: number) => {})}</>
+        <>
+          {problemStore.activeWalls.map((wall) => {
+            return (
+              <>
+                <rect
+                  x="0"
+                  y={`${problemStore.getViewY(wall.y) - 1.5 * problemStore.radius}`}
+                  width={`${wall.hole - (problemStore.radius * problemStore.holeWidth) / 2}`}
+                  height={`${problemStore.radius * 3}`}
+                  fill="var(--highlight)"
+                />
+                <rect
+                  x={`${wall.hole + problemStore.radius * 5}`}
+                  y={`${problemStore.getViewY(wall.y) - 1.5 * problemStore.radius}`}
+                  width={`${
+                    problemStore.width -
+                    wall.hole -
+                    (problemStore.radius * problemStore.holeWidth) / 2
+                  }`}
+                  height={`${problemStore.radius * 3}`}
+                  fill="var(--highlight)"
+                />
+                {wall.obs.map((obs) => {
+                  return (
+                    <rect
+                      x={`${obs.x - problemStore.radius}`}
+                      y={`${problemStore.getViewY(obs.y) - problemStore.radius}`}
+                      width={`${problemStore.radius * 2}`}
+                      height={`${problemStore.radius * 2}`}
+                      fill="var(--highlight)"
+                    />
+                  );
+                })}
+              </>
+            );
+          })}
+        </>
         <polygon
           points={`${problemStore.brick.pos.x},${
             problemStore.getViewY(problemStore.brick.pos.y) - problemStore.radius
@@ -94,9 +110,12 @@ function Bricks() {
           stroke="var(--foreground)"
           stroke-width="2"
         />
+        <text x={problemStore.width - 50} y={50} fill="var(--foreground)" font-size="32">
+          {problemStore.count}
+        </text>
       </svg>
     </div>
   );
 }
 
-export default observer(Bricks);
+export default observer(Brick);

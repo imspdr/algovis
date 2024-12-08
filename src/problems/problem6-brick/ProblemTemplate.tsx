@@ -4,15 +4,20 @@ import MobileTemplate from "@src/common/template/MobileTemplate";
 import { observer } from "mobx-react";
 import { useProblemStore } from "./store/ProblemStoreProvider";
 import ProblemDesc from "./components/ProblemDesc";
-import Bricks from "./components/Bricks";
+import Brick from "./components/Brick";
 
 function ProblemTemplate() {
   const [nowWidth, setNowWidth] = useState(window.innerWidth);
+  const [viewWidth, setViewWidth] = useState(0);
   useEffect(() => {
     addEventListener("resize", () => {
       setNowWidth(window.innerWidth);
     });
   }, []);
+
+  useEffect(() => {
+    problemStore.reset();
+  }, [viewWidth]);
 
   const problemStore = useProblemStore();
 
@@ -29,7 +34,7 @@ function ProblemTemplate() {
   };
   const problem = <ProblemDesc />;
   const controller = <span>해당 문제에는 조작할 변수가 없습니다</span>;
-  const viewer = <Bricks />;
+  const viewer = <Brick />;
 
   return (
     <>
@@ -42,6 +47,9 @@ function ProblemTemplate() {
           onStart={onStart}
           onStop={onStop}
           onRefresh={onRefresh}
+          onWidthChange={(v) => {
+            setViewWidth(v);
+          }}
         />
       ) : (
         <MobileTemplate

@@ -12,6 +12,7 @@ export default function Template(props: {
   onStart: () => Promise<boolean> | boolean | void;
   onStop: () => void;
   onRefresh: () => void;
+  onWidthChange?: (v: number) => void;
 }) {
   const [dividerPosition, setDividerPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
@@ -21,7 +22,11 @@ export default function Template(props: {
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging) return;
     const newDividerPosition = (e.clientX / window.innerWidth) * 100;
-    setDividerPosition(Math.max(20, Math.min(newDividerPosition, 80)));
+    const adjustedDividerPosition = Math.max(20, Math.min(newDividerPosition, 80));
+    setDividerPosition(adjustedDividerPosition);
+    if (props.onWidthChange) {
+      props.onWidthChange(adjustedDividerPosition);
+    }
   };
 
   return (

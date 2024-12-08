@@ -11,7 +11,7 @@ import Problem2Page from "@src/problems/problem2-magicforest/ProblemMain";
 import Problem3Page from "@src/problems/problem3-sort/ProblemMain";
 import Problem4Page from "@src/problems/problem4-clock/ProblemMain";
 import Problem5Page from "@src/problems/problem5-suika/ProblemMain";
-import Problem6Page from "@src/problems/problem6-bricks/ProblemMain";
+import Problem6Page from "@src/problems/problem6-brick/ProblemMain";
 
 type CodingTest = {
   name: string;
@@ -46,9 +46,9 @@ export const codingTests: CodingTest[] = [
     desc: "수박 게임 직접 구현해보기",
   },
   {
-    url: "bricks",
-    name: "Bricks",
-    desc: "Amazing Bricks 구현해보기",
+    url: "brick",
+    name: "brick",
+    desc: "Amazing brick 구현해보기",
   },
 ];
 
@@ -142,7 +142,7 @@ export default function App() {
             <Route path="/sort" element={<Problem3Page />} />
             <Route path="/clock" element={<Problem4Page />} />
             <Route path="/suika" element={<Problem5Page />} />
-            <Route path="/bricks" element={<Problem6Page />} />
+            <Route path="/brick" element={<Problem6Page />} />
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
