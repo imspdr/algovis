@@ -89,8 +89,8 @@ class ProblemStore {
     this.stopFlag = true;
     this.createFlag = false;
 
-    this.gravity = -0.5;
-    this.upperPower = 10;
+    this.gravity = -0.3;
+    this.upperPower = 7;
     this.horizontalPower = 1;
 
     makeAutoObservable(this);
@@ -218,16 +218,18 @@ class ProblemStore {
     runInAction(() => {
       this.loseFlag = false;
       this.stopFlag = false;
+      this.interval = requestAnimationFrame(this.unitAction);
     });
-    this.interval = setInterval(() => {
-      this.unitAction();
-    }, INTERVAL);
+    // this.interval = setInterval(() => {
+    //   this.unitAction();
+    // }, INTERVAL);
   };
 
   stop = () => {
     runInAction(() => {
       this.stopFlag = true;
-      if (this.interval) clearInterval(this.interval);
+      cancelAnimationFrame(this.interval);
+      // if (this.interval) clearInterval(this.interval);
     });
   };
 
@@ -316,7 +318,10 @@ class ProblemStore {
       // check gameover
       if (newY - this.nowHeight < -this.height / 2 || this.checkCrash(newX, newY)) {
         this.loseFlag = true;
-        this.stop();
+        this.stopFlag = true;
+        cancelAnimationFrame(this.interval);
+      } else {
+        this.interval = requestAnimationFrame(this.unitAction);
       }
     });
   };
