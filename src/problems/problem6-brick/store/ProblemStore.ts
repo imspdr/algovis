@@ -32,9 +32,11 @@ const rectCrashCheck = (x: number, y: number, r: number, cx: number, cy: number,
 };
 
 class ProblemStore {
-  holeWidth: number;
+  animationId: any;
+  lastTime: number | undefined;
+  timeInterval: number;
 
-  interval: any;
+  holeWidth: number;
   radius: number;
 
   width: number;
@@ -62,7 +64,7 @@ class ProblemStore {
     this.count = 0;
     this.holeWidth = 10;
 
-    this.interval = undefined;
+    this.timeInterval = 16;
     this.radius = 10;
     this.height = 100;
     this.width = 100;
@@ -89,9 +91,9 @@ class ProblemStore {
     this.stopFlag = true;
     this.createFlag = false;
 
-    this.gravity = -0.3;
-    this.upperPower = 7;
-    this.horizontalPower = 1;
+    this.gravity = -0.2;
+    this.upperPower = 5;
+    this.horizontalPower = 0.5;
 
     makeAutoObservable(this);
   }
@@ -158,7 +160,7 @@ class ProblemStore {
     runInAction(() => {
       this.count = 0;
       this.nowHeight = this.height / 2;
-      this.wallHeight = this.nowHeight + this.radius * WALLGAP * 2;
+      this.wallHeight = this.nowHeight + this.radius * WALLGAP;
       this.activeWalls = [...Array(2)].map((_, i) => {
         return this.newWall(i, i == 0);
       });
@@ -218,7 +220,22 @@ class ProblemStore {
     runInAction(() => {
       this.loseFlag = false;
       this.stopFlag = false;
-      this.interval = requestAnimationFrame(this.unitAction);
+      const animate = (current: number) => {
+        let result: boolean = true;
+        if (!this.lastTime) this.lastTime = current;
+        const elapsed = current - this.lastTime;
+        if (elapsed >= this.timeInterval) {
+          result = this.unitAction();
+          this.lastTime = current - (elapsed % this.timeInterval);
+        }
+        if (result) {
+          this.animationId = requestAnimationFrame(animate);
+        } else {
+          this.loseFlag = true;
+          this.stop();
+        }
+      };
+      this.animationId = requestAnimationFrame(animate);
     });
     // this.interval = setInterval(() => {
     //   this.unitAction();
@@ -228,13 +245,13 @@ class ProblemStore {
   stop = () => {
     runInAction(() => {
       this.stopFlag = true;
-      cancelAnimationFrame(this.interval);
+      cancelAnimationFrame(this.animationId);
       // if (this.interval) clearInterval(this.interval);
     });
   };
 
   reset = () => {
-    if (this.interval) clearInterval(this.interval);
+    if (this.animationId) cancelAnimationFrame(this.animationId);
     this.setView();
     this.initBrick();
     this.initWall();
@@ -283,13 +300,12 @@ class ProblemStore {
     return false;
   };
   unitAction = () => {
+    let newX = Math.max(
+      this.radius,
+      Math.min(this.brick.pos.x + this.brick.velocity.x, this.width - this.radius)
+    );
+    let newY = this.brick.pos.y + this.brick.velocity.y;
     runInAction(() => {
-      let newX = Math.max(
-        this.radius,
-        Math.min(this.brick.pos.x + this.brick.velocity.x, this.width - this.radius)
-      );
-      let newY = this.brick.pos.y + this.brick.velocity.y;
-
       if (newY > this.nowHeight) {
         this.nowHeight = newY;
       }
@@ -314,16 +330,13 @@ class ProblemStore {
         this.generateWall();
         this.count += 1;
       }
-
-      // check gameover
-      if (newY - this.nowHeight < -this.height / 2 || this.checkCrash(newX, newY)) {
-        this.loseFlag = true;
-        this.stopFlag = true;
-        cancelAnimationFrame(this.interval);
-      } else {
-        this.interval = requestAnimationFrame(this.unitAction);
-      }
     });
+    // check gameover
+    if (newY - this.nowHeight < -this.height / 2 || this.checkCrash(newX, newY)) {
+      return false;
+    } else {
+      return true;
+    }
   };
 }
 
