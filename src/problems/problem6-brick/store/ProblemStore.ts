@@ -63,7 +63,7 @@ class ProblemStore {
     this.count = 0;
     this.holeWidth = 10;
 
-    this.timeInterval = 10;
+    this.timeInterval = 1000 / 144;
     this.radius = 10;
     this.height = 100;
     this.width = 100;
@@ -90,9 +90,9 @@ class ProblemStore {
     this.stopFlag = true;
     this.createFlag = false;
 
-    this.gravity = -0.2;
-    this.upperPower = 6;
-    this.horizontalPower = 0.6;
+    this.gravity = -0.1;
+    this.upperPower = 4;
+    this.horizontalPower = 0.5;
 
     makeAutoObservable(this);
   }
