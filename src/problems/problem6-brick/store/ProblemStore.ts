@@ -12,7 +12,6 @@ type wall = {
 };
 
 const WALLGAP = 30;
-const INTERVAL = 20;
 
 const rectCrashCheck = (x: number, y: number, r: number, cx: number, cy: number, R: number) => {
   const yGap = Math.abs(y - cy);
@@ -64,7 +63,7 @@ class ProblemStore {
     this.count = 0;
     this.holeWidth = 10;
 
-    this.timeInterval = 16;
+    this.timeInterval = 10;
     this.radius = 10;
     this.height = 100;
     this.width = 100;
@@ -92,8 +91,8 @@ class ProblemStore {
     this.createFlag = false;
 
     this.gravity = -0.2;
-    this.upperPower = 5;
-    this.horizontalPower = 0.5;
+    this.upperPower = 6;
+    this.horizontalPower = 0.6;
 
     makeAutoObservable(this);
   }
