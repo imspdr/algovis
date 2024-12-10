@@ -90,8 +90,8 @@ class ProblemStore {
     this.stopFlag = true;
     this.createFlag = false;
 
-    this.gravity = -0.1;
-    this.upperPower = 4;
+    this.gravity = -0.05;
+    this.upperPower = 2;
     this.horizontalPower = 0.5;
 
     makeAutoObservable(this);
