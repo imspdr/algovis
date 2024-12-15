@@ -9,10 +9,14 @@ import Forest from "./components/Forest";
 
 function ProblemTemplate() {
   const [nowWidth, setNowWidth] = useState(window.innerWidth);
+  const resize = () => {
+    setNowWidth(window.innerWidth);
+  };
   useEffect(() => {
-    addEventListener("resize", () => {
-      setNowWidth(window.innerWidth);
-    });
+    addEventListener("resize", resize);
+    return () => {
+      removeEventListener("resize", resize);
+    };
   }, []);
 
   const problemStore = useProblemStore();

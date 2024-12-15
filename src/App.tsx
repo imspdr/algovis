@@ -1,6 +1,6 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Typography } from "@mui/material";
 import { css } from "@emotion/react";
 import { unselectable } from "@src/util";
@@ -67,6 +67,16 @@ const darkTheme = createTheme({
 export default function App() {
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(false);
+  const [height, setHeight] = useState(window.innerHeight);
+  const resize = () => {
+    setHeight(window.innerHeight);
+  };
+  useEffect(() => {
+    addEventListener("resize", resize);
+    return () => {
+      removeEventListener("resize", resize);
+    };
+  }, []);
   const url = window.location.href.split("/");
   const label = codingTests.find((val) => val.url === url[url.length - 1]);
   const toggleTheme = () => {
@@ -131,7 +141,7 @@ export default function App() {
             position: absolute;
             top: 48px;
             width: 100%;
-            height: calc(100vh - 48px);
+            height: calc(${height}px - 48px);
             ${unselectable}
           `}
         >

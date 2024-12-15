@@ -10,12 +10,15 @@ import Controller from "./components/Controller";
 function ProblemTemplate() {
   const [nowWidth, setNowWidth] = useState(window.innerWidth);
   const [viewWidth, setViewWidth] = useState(0);
+  const resize = () => {
+    setNowWidth(window.innerWidth);
+  };
   useEffect(() => {
-    addEventListener("resize", () => {
-      setNowWidth(window.innerWidth);
-    });
+    addEventListener("resize", resize);
+    return () => {
+      removeEventListener("resize", resize);
+    };
   }, []);
-
   useEffect(() => {
     problemStore.reset();
   }, [viewWidth]);
