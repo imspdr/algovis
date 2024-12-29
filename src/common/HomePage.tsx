@@ -16,7 +16,7 @@ export default function HomePage() {
       <Paper
         elevation={0}
         css={css`
-          width: 300px;
+          width: 310px;
           border-radius: 10px;
           border: 1px solid;
         `}

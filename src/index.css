@@ -21,12 +21,20 @@
 }
 
 html {
+  font-family: "GmarketSansMedium";
   background: var(--background);
   color: var(--foreground);
 }
 body {
   padding: 0;
   margin: 0;
+}
+
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("./fonts/GmarketSansMedium.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 *::-webkit-scrollbar,
