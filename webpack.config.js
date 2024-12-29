@@ -145,7 +145,6 @@ module.exports = (env) => {
             type: "asset/resource",
             generator: {
               filename: "algovis[hash][ext]",
-              publicPath: "/algovis", // Prefix the font path
             },
           },
         ],
