@@ -53,18 +53,12 @@ export const codingTests: CodingTest[] = [
 ];
 
 const lightTheme = createTheme({
-  typography: {
-    fontFamily: "GmarketSansMedium",
-  },
   palette: {
     mode: "light",
   },
 });
 
 const darkTheme = createTheme({
-  typography: {
-    fontFamily: "GmarketSansMedium",
-  },
   palette: {
     mode: "dark",
   },
