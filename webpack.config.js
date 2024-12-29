@@ -61,9 +61,16 @@ module.exports = (env) => {
             ],
           },
           {
-            test: /\.(gif|png|jpe?g|ttf|mp3|ogg|wav|otf|woff|jpg|ico)$/,
+            test: /\.(gif|png|jpe?g|ttf|mp3|ogg|wav|jpg|ico)$/,
             type: "asset/resource",
           },
+          {
+            test: /\.(woff|woff2|eot|ttf|otf)$/, 
+            type: 'asset/resource', 
+            generator: {
+              filename: 'fonts/[name][ext][query]', 
+            },
+          }
         ],
       },
       devServer: {
@@ -137,9 +144,16 @@ module.exports = (env) => {
             ],
           },
           {
-            test: /\.(gif|png|jpe?g|ttf|mp3|ogg|wav|woff|otf|jpg|ico)$/,
+            test: /\.(gif|png|jpe?g|ttf|mp3|ogg|wav|jpg|ico)$/,
             type: "asset/resource",
           },
+          {
+            test: /\.(woff|woff2|eot|ttf|otf)$/, 
+            type: 'asset/resource', 
+            generator: {
+              filename: 'fonts/[name][ext][query]', 
+            },
+          }
         ],
       },
     };
