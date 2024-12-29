@@ -43,7 +43,7 @@ module.exports = (env) => {
           },
           {
             test: /\.(md|txt)$/,
-            use: 'raw-loader',
+            use: "raw-loader",
           },
           {
             test: /\.svg$/i,
@@ -66,9 +66,9 @@ module.exports = (env) => {
           },
           {
             test: /\.(woff|woff2|eot|ttf|otf)$/, 
-            type: 'asset/resource', 
+            type: "asset/resource", 
             generator: {
-              filename: 'fonts/[name][ext][query]', 
+              filename: "fonts/[name][ext][query]", 
             },
           }
         ],
@@ -126,7 +126,7 @@ module.exports = (env) => {
           },
           {
             test: /\.(md|txt)$/,
-            use: 'raw-loader',
+            use: "raw-loader",
           },
           {
             test: /\.svg$/i,
@@ -149,9 +149,9 @@ module.exports = (env) => {
           },
           {
             test: /\.(woff|woff2|eot|ttf|otf)$/, 
-            type: 'asset/resource', 
+            type: "asset/resource", 
             generator: {
-              filename: 'fonts/[name][ext][query]', 
+              filename: "[name][ext][query]", 
             },
           }
         ],
