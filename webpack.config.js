@@ -11,7 +11,7 @@ module.exports = (env) => {
       output: {
         path: path.join(__dirname, "docs"),
         filename: "main.js",
-        publicPath: "/algovis",
+        publicPath: "/",
       },
       resolve: {
         extensions: [".js", ".jsx", ".ts", ".tsx"],
