@@ -68,7 +68,8 @@ module.exports = (env) => {
             test: /\.(woff|woff2|eot|ttf|otf)$/, 
             type: "asset/resource", 
             generator: {
-              filename: "fonts/[name][ext][query]", 
+              filename: "[name][ext][query]", 
+              publicPath: "/algovis"
             },
           }
         ],
@@ -152,6 +153,7 @@ module.exports = (env) => {
             type: "asset/resource", 
             generator: {
               filename: "[name][ext][query]", 
+              publicPath: "/algovis"
             },
           }
         ],
