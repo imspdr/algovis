@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require("path");
 
 module.exports = (env) => {
@@ -66,11 +67,7 @@ module.exports = (env) => {
           },
           {
             test: /\.(woff|woff2|eot|ttf|otf)$/, 
-            type: "asset/resource", 
-            generator: {
-              filename: "[name][ext][query]", 
-              publicPath: "/algovis"
-            },
+            type: "asset/resource",
           }
         ],
       },
@@ -151,10 +148,6 @@ module.exports = (env) => {
           {
             test: /\.(woff|woff2|eot|ttf|otf)$/, 
             type: "asset/resource", 
-            generator: {
-              filename: "[name][ext][query]", 
-              publicPath: "/algovis"
-            },
           }
         ],
       },
