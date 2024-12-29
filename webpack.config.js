@@ -11,7 +11,7 @@ module.exports = (env) => {
       output: {
         path: path.join(__dirname, "docs"),
         filename: "main.js",
-        publicPath: "/",
+        publicPath: "/algovis",
       },
       resolve: {
         extensions: [".js", ".jsx", ".ts", ".tsx"],
@@ -137,8 +137,16 @@ module.exports = (env) => {
             ],
           },
           {
-            test: /\.(gif|png|jpe?g|ttf|mp3|ogg|wav|otf|woff|jpg|ico)$/,
+            test: /\.(gif|png|jpe?g|ttf|mp3|ogg|wav|otf|jpg|ico)$/,
             type: "asset/resource",
+          },
+          {
+            test: /\.(woff)$/,
+            type: "asset/resource",
+            generator: {
+              filename: "algovis[hash][ext]",
+              publicPath: "/algovis", // Prefix the font path
+            },
           },
         ],
       },
