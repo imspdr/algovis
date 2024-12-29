@@ -32,7 +32,7 @@ body {
 
 @font-face {
   font-family: "GmarketSansMedium";
-  src: url("/src/fonts/GmarketSansMedium.woff") format("woff");
+  src: url("./fonts/GmarketSansMedium.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
