@@ -137,15 +137,8 @@ module.exports = (env) => {
             ],
           },
           {
-            test: /\.(gif|png|jpe?g|ttf|mp3|ogg|wav|otf|jpg|ico)$/,
+            test: /\.(gif|png|jpe?g|ttf|mp3|ogg|wav|woff|otf|jpg|ico)$/,
             type: "asset/resource",
-          },
-          {
-            test: /\.(woff)$/,
-            type: "asset/resource",
-            generator: {
-              filename: "fonts/[name][ext]",
-            },
           },
         ],
       },
