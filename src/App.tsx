@@ -1,17 +1,11 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Typography } from "@mui/material";
 import { css } from "@emotion/react";
 import { unselectable } from "@src/util";
 import ThemeToggle from "./common/ThemeToggle";
 import HomePage from "./common/HomePage";
-import Problem1Page from "@src/problems/problem1-nqueen/ProblemMain";
-import Problem2Page from "@src/problems/problem2-magicforest/ProblemMain";
-import Problem3Page from "@src/problems/problem3-sort/ProblemMain";
-import Problem4Page from "@src/problems/problem4-clock/ProblemMain";
-import Problem5Page from "@src/problems/problem5-suika/ProblemMain";
-import Problem6Page from "@src/problems/problem6-brick/ProblemMain";
 
 type CodingTest = {
   name: string;
@@ -68,6 +62,14 @@ export default function App() {
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(false);
   const [height, setHeight] = useState(window.innerHeight);
+
+  const Problem1Page = lazy(() => import("@src/problems/problem1-nqueen/ProblemMain"));
+  const Problem2Page = lazy(() => import("@src/problems/problem2-magicforest/ProblemMain"));
+  const Problem3Page = lazy(() => import("@src/problems/problem3-sort/ProblemMain"));
+  const Problem4Page = lazy(() => import("@src/problems/problem4-clock/ProblemMain"));
+  const Problem5Page = lazy(() => import("@src/problems/problem5-suika/ProblemMain"));
+  const Problem6Page = lazy(() => import("@src/problems/problem6-brick/ProblemMain"));
+
   const resize = () => {
     setHeight(window.innerHeight);
   };
@@ -145,17 +147,33 @@ export default function App() {
             ${unselectable}
           `}
         >
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/nqueen" element={<Problem1Page />} />
-            <Route path="/magicforest" element={<Problem2Page />} />
-            <Route path="/sort" element={<Problem3Page />} />
-            <Route path="/clock" element={<Problem4Page />} />
-            <Route path="/suika" element={<Problem5Page />} />
-            <Route path="/brick" element={<Problem6Page />} />
+          <Suspense
+            fallback={
+              <div
+                css={css`
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                `}
+              >
+                LOADING
+              </div>
+            }
+          >
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/nqueen" element={<Problem1Page />} />
+              <Route path="/magicforest" element={<Problem2Page />} />
+              <Route path="/sort" element={<Problem3Page />} />
+              <Route path="/clock" element={<Problem4Page />} />
+              <Route path="/suika" element={<Problem5Page />} />
+              <Route path="/brick" element={<Problem6Page />} />
 
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
         </div>
       </>
     </ThemeProvider>
