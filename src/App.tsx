@@ -1,6 +1,6 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { Typography } from "@mui/material";
 import { css } from "@emotion/react";
 import { unselectable } from "@src/util";
@@ -11,7 +11,8 @@ import Problem2Page from "@src/problems/problem2-magicforest/ProblemMain";
 import Problem3Page from "@src/problems/problem3-sort/ProblemMain";
 import Problem4Page from "@src/problems/problem4-clock/ProblemMain";
 import Problem5Page from "@src/problems/problem5-suika/ProblemMain";
-import Problem6Page from "@src/problems/problem6-brick/ProblemMain";
+
+import { lazy } from "react";
 
 type CodingTest = {
   name: string;
@@ -79,6 +80,7 @@ export default function App() {
   }, []);
   const url = window.location.href.split("/");
   const label = codingTests.find((val) => val.url === url[url.length - 1]);
+  const Problem6Page = lazy(() => import("@src/problems/problem6-brick/ProblemMain"));
   const toggleTheme = () => {
     const styles = getComputedStyle(document.body);
 
@@ -145,17 +147,19 @@ export default function App() {
             ${unselectable}
           `}
         >
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/nqueen" element={<Problem1Page />} />
-            <Route path="/magicforest" element={<Problem2Page />} />
-            <Route path="/sort" element={<Problem3Page />} />
-            <Route path="/clock" element={<Problem4Page />} />
-            <Route path="/suika" element={<Problem5Page />} />
-            <Route path="/brick" element={<Problem6Page />} />
+          <Suspense fallback={<div>{"loading"}</div>}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/nqueen" element={<Problem1Page />} />
+              <Route path="/magicforest" element={<Problem2Page />} />
+              <Route path="/sort" element={<Problem3Page />} />
+              <Route path="/clock" element={<Problem4Page />} />
+              <Route path="/suika" element={<Problem5Page />} />
+              <Route path="/brick" element={<Problem6Page />} />
 
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
         </div>
       </>
     </ThemeProvider>
